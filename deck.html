@@ -1,0 +1,728 @@
+<title>Your AI Knows PHP</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    --ground: #e9edf1;
+    --paper: #f8f9fa;
+    --paper-2: #eef1f4;
+    --line: #c9d2db;
+    --ink: #16202a;
+    --muted: #5a6b7a;
+    --accent: #2456c8;
+    --accent-ink: #ffffff;
+    --mark: #ffd84d;
+    --mark-ink: #3b2f00;
+    --ok: #2a7d4f;
+    --warn: #b8432b;
+    --term: #0f1720;
+    --term-ink: #e6edf3;
+    --term-hi: #ffd866;
+    --shadow: 0 1.2cqi 3cqi rgba(22, 32, 42, .12);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #0e141b; --paper: #182330; --paper-2: #1f2c3a; --line: #34465a;
+      --ink: #e8edf2; --muted: #97a8b8; --accent: #7fa6ff; --accent-ink: #0e141b;
+      --mark: #e3bf3f; --mark-ink: #1a1400; --ok: #5cc48a; --warn: #f08a72;
+      --term: #0a0f14; --term-ink: #e6edf3; --term-hi: #ffd866;
+      --shadow: 0 1.2cqi 3cqi rgba(0, 0, 0, .45);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #0e141b; --paper: #182330; --paper-2: #1f2c3a; --line: #34465a;
+    --ink: #e8edf2; --muted: #97a8b8; --accent: #7fa6ff; --accent-ink: #0e141b;
+    --mark: #e3bf3f; --mark-ink: #1a1400; --ok: #5cc48a; --warn: #f08a72;
+    --term: #0a0f14; --term-ink: #e6edf3; --term-hi: #ffd866;
+    --shadow: 0 1.2cqi 3cqi rgba(0, 0, 0, .45);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    margin: 0; background: var(--ground); color: var(--ink);
+    font-family: "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
+    display: grid; place-items: center; padding: 1.5rem; overflow: hidden;
+  }
+  .stage {
+    width: min(100vw - 3rem, (100vh - 3rem) * 16 / 9);
+    aspect-ratio: 16 / 9; container-type: inline-size; position: relative;
+    background: var(--paper); box-shadow: var(--shadow); border-radius: 0.6cqi; overflow: hidden;
+  }
+  .slide {
+    position: absolute; inset: 0; padding: 6cqi 7cqi 7cqi;
+    display: none; flex-direction: column; font-size: 1.75cqi; line-height: 1.45;
+  }
+  .slide.is-active { display: flex; }
+
+  .eyebrow {
+    position: absolute; top: 3cqi; left: 7cqi;
+    font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 1.1cqi;
+    letter-spacing: .12em; text-transform: uppercase; color: var(--muted);
+  }
+  .counter {
+    position: absolute; bottom: 2.6cqi; right: 7cqi;
+    font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 1.1cqi; color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+  .progress { position: absolute; left: 0; bottom: 0; height: .35cqi; background: var(--accent); width: 0; transition: width .25s ease; }
+  @media (prefers-reduced-motion: reduce) { .progress { transition: none; } }
+
+  h1, h2 {
+    font-family: "Bricolage Grotesque", "Instrument Sans", Arial, sans-serif;
+    font-weight: 700; letter-spacing: -.02em; line-height: 1.05; margin: 0; text-wrap: balance;
+  }
+  h1 { font-size: 7.5cqi; }
+  h2 { font-size: 4.2cqi; margin-bottom: 2.4cqi; }
+  h2 .q { color: var(--accent); }
+  p { margin: 0; }
+  .lede { font-size: 2.3cqi; color: var(--muted); max-width: 48ch; line-height: 1.35; }
+  .muted { color: var(--muted); }
+  code, .mono { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: .92em; }
+  code { background: var(--paper-2); padding: .05em .35em; border-radius: .25em; }
+  mark { background: var(--mark); color: var(--mark-ink); padding: .02em .3em; border-radius: .2em; }
+  strong { font-weight: 600; }
+  ul { margin: 0; padding-left: 1.3em; }
+  li { margin-bottom: .55em; }
+  li:last-child { margin-bottom: 0; }
+  .todo {
+    font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 1.2cqi; color: var(--warn);
+    border: 1px dashed var(--warn); border-radius: .4cqi; padding: .5cqi .9cqi; display: inline-block; margin-top: auto; align-self: flex-start;
+  }
+
+  /* ---- title ---- */
+  .title { justify-content: center; }
+  .title .kicker {
+    font-family: "JetBrains Mono", ui-monospace, monospace; color: var(--accent);
+    font-size: 1.4cqi; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 2cqi;
+  }
+  .title .sub { font-size: 2.6cqi; color: var(--muted); margin-top: 2cqi; max-width: 40ch; }
+  .title .foot {
+    position: absolute; bottom: 7cqi; left: 7cqi; display: flex; gap: 3cqi;
+    font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 1.25cqi; color: var(--muted);
+  }
+
+  /* ---- big statement ---- */
+  .big { justify-content: center; }
+  .big h1 { font-size: 6.2cqi; max-width: 22ch; }
+  .big h1 em { color: var(--accent); font-style: normal; }
+  .big .lede { margin-top: 2.6cqi; }
+
+  /* ---- grids ---- */
+  .cols { display: grid; gap: 3cqi; flex: 1; min-height: 0; }
+  .cols-2 { grid-template-columns: 1fr 1fr; }
+  .cols-2x2 { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 2.4cqi 3.5cqi; }
+  .why h3, .gain h3 {
+    font-family: "Bricolage Grotesque", "Instrument Sans", Arial, sans-serif;
+    font-weight: 700; font-size: 2.9cqi; margin: 0 0 .6cqi; letter-spacing: -.01em;
+  }
+  .why .ex, .gain .ex { margin-top: .8cqi; padding-left: 1cqi; border-left: .3cqi solid var(--line); color: var(--muted); font-size: 1.9cqi; }
+  .gain h3::before { content: "+"; color: var(--accent); margin-right: .4em; font-weight: 700; }
+  .why h3::before { content: "−"; color: var(--warn); margin-right: .4em; font-weight: 700; }
+
+  /* ---- is / is not ---- */
+  .isnot { display: grid; grid-template-columns: 1fr 1fr; gap: 4cqi; flex: 1; }
+  .isnot h3 {
+    font-family: "JetBrains Mono", ui-monospace, monospace; font-weight: 500; font-size: 1.2cqi;
+    letter-spacing: .12em; text-transform: uppercase; color: var(--muted);
+    margin: 0 0 1.4cqi; padding-bottom: .6cqi; border-bottom: 1px solid var(--line);
+  }
+  .isnot ul { list-style: none; padding: 0; }
+  .isnot li { padding-left: 1.6em; position: relative; font-size: 2.1cqi; margin-bottom: .7em; }
+  .isnot .is li::before { content: "●"; color: var(--accent); position: absolute; left: 0; font-size: .7em; top: .35em; }
+  .isnot .not li::before { content: "✕"; color: var(--warn); position: absolute; left: 0; font-size: .8em; top: .25em; }
+  .thesis {
+    margin-top: auto; font-family: "Bricolage Grotesque", "Instrument Sans", Arial, sans-serif;
+    font-weight: 500; font-size: 2.5cqi; letter-spacing: -.01em;
+    padding: 1.6cqi 2cqi; border-radius: .6cqi; background: var(--paper-2);
+  }
+  .thesis .by { display: block; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 1.2cqi; color: var(--muted); margin-top: .6cqi; font-weight: 400; }
+
+  /* ---- chain ---- */
+  .chain { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr; gap: 1.2cqi; align-items: stretch; margin-top: 1cqi; }
+  .node {
+    background: var(--paper-2); border: 1px solid var(--line); border-radius: .6cqi;
+    padding: 1.6cqi 1.6cqi; display: flex; flex-direction: column; gap: .5cqi; min-height: 17cqi;
+    transition: background-color .2s ease, color .2s ease, border-color .2s ease;
+  }
+  .node.hot { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+  .node.hot .tag, .node.hot .num { color: var(--accent-ink); opacity: .85; }
+  .node .tag { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 1.05cqi; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+  .node .name { font-family: "Bricolage Grotesque", "Instrument Sans", Arial, sans-serif; font-weight: 700; font-size: 2.3cqi; line-height: 1.15; }
+  .node .desc { font-size: 1.6cqi; line-height: 1.35; }
+  .node .num { margin-top: auto; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 1.25cqi; color: var(--muted); }
+  .node.hot code { background: rgba(255,255,255,.18); color: inherit; }
+  .arrow { align-self: center; color: var(--muted); font-size: 3cqi; line-height: 1; }
+  .chain-note { margin-top: 2.6cqi; display: grid; grid-template-columns: 1fr 1fr; gap: 3cqi; font-size: 1.8cqi; }
+  .chain-note strong { color: var(--accent); }
+  @media (prefers-reduced-motion: reduce) { .node { transition: none; } }
+
+  /* ---- cards ---- */
+  .duo { display: grid; grid-template-columns: 1fr 1fr; gap: 3cqi; flex: 1; min-height: 0; }
+  .card {
+    background: var(--paper-2); border: 1px solid var(--line); border-radius: .6cqi;
+    padding: 2cqi 2.2cqi; display: flex; flex-direction: column; gap: 1cqi;
+    transition: background-color .2s ease, color .2s ease, border-color .2s ease;
+  }
+  .card .tag { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 1.1cqi; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+  .card h3 { font-family: "Bricolage Grotesque", "Instrument Sans", Arial, sans-serif; font-weight: 700; font-size: 2.4cqi; margin: 0; }
+  .card ul { font-size: 1.85cqi; }
+  .card.hot { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+  .card.hot .tag { color: var(--accent-ink); opacity: .8; }
+  .card.hot code { background: rgba(255,255,255,.18); color: inherit; }
+  .card.hot .sample { background: rgba(255,255,255,.14); border-color: transparent; color: inherit; }
+  .sample { margin-top: auto; background: var(--paper); border: 1px solid var(--line); border-radius: .5cqi; padding: 1.2cqi 1.5cqi; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 1.3cqi; line-height: 1.5; white-space: pre; overflow: hidden; }
+  @media (prefers-reduced-motion: reduce) { .card { transition: none; } }
+
+  /* ---- clocks (3 columns) ---- */
+  .clocks { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.6cqi; margin-bottom: 2.6cqi; }
+  .clock { padding: 1.8cqi 2cqi; border-top: .4cqi solid var(--accent); background: var(--paper-2); border-radius: 0 0 .6cqi .6cqi; transition: background-color .2s ease, color .2s ease; }
+  .clock .tag { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 1.1cqi; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+  .clock h3 { font-family: "Bricolage Grotesque", "Instrument Sans", Arial, sans-serif; font-weight: 700; font-size: 2.5cqi; margin: .4cqi 0 .6cqi; }
+  .clock p { font-size: 1.85cqi; }
+  .clock .score { margin-top: 1cqi; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 1.25cqi; color: var(--muted); }
+  .clock.hot { background: var(--accent); color: var(--accent-ink); }
+  .clock.hot .tag, .clock.hot .score { color: var(--accent-ink); opacity: .85; }
+  .clock.hot code { background: rgba(255,255,255,.18); color: inherit; }
+  .rules { display: grid; grid-template-columns: 1fr 1fr; gap: 1cqi 3cqi; font-size: 2.1cqi; }
+  @media (prefers-reduced-motion: reduce) { .clock { transition: none; } }
+
+  /* ---- numbered conclusions ---- */
+  .steps { list-style: none; padding: 0; margin: 0; counter-reset: s; display: flex; flex-direction: column; gap: 1.6cqi; }
+  .steps li { counter-increment: s; display: grid; grid-template-columns: auto 1fr; gap: 1.6cqi; align-items: baseline; font-size: 2.2cqi; padding: 1.2cqi 1.6cqi; border-radius: .5cqi; transition: background-color .2s ease, color .2s ease; }
+  .steps li::before { content: counter(s); font-family: "JetBrains Mono", ui-monospace, monospace; color: var(--accent); font-size: 1.6cqi; }
+  .steps li.hot { background: var(--accent); color: var(--accent-ink); }
+  .steps li.hot::before { color: var(--accent-ink); }
+  .steps li .sub { display: block; font-size: 1.7cqi; color: var(--muted); margin-top: .3cqi; }
+  .steps li.hot .sub { color: var(--accent-ink); opacity: .85; }
+  @media (prefers-reduced-motion: reduce) { .steps li { transition: none; } }
+
+  /* ---- demo / terminal ---- */
+  .demo { justify-content: center; }
+  .prompt {
+    font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 2.4cqi; line-height: 1.4;
+    background: var(--term); color: var(--term-ink); border-left: .5cqi solid var(--accent);
+    padding: 2cqi 2.6cqi; margin: 2.2cqi 0; max-width: 46ch; border-radius: 0 .5cqi .5cqi 0;
+  }
+  .prompt .cur { color: var(--accent); }
+  .prompt .hi { color: var(--term-hi); }
+  .prompt.small { font-size: 1.9cqi; }
+  .watch { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.4cqi; font-size: 1.6cqi; margin-top: 1cqi; }
+  .watch strong { display: block; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 1.1cqi; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: .4cqi; }
+  .term {
+    background: var(--term); color: var(--term-ink); border-radius: .6cqi; padding: 1.8cqi 2.2cqi;
+    font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 1.55cqi; line-height: 1.5; white-space: pre; overflow: hidden;
+  }
+  .term .hi { color: var(--term-hi); }
+  .term .dim { opacity: .55; }
+  .split { display: grid; grid-template-columns: 1.15fr 1fr; gap: 3.5cqi; flex: 1; min-height: 0; }
+  .split ul { font-size: 1.95cqi; }
+  .split .term { align-self: start; }
+
+  /* ---- nav & notes ---- */
+  .hint { position: absolute; bottom: 2.6cqi; left: 7cqi; font-size: 1.1cqi; color: var(--muted); font-family: "JetBrains Mono", ui-monospace, monospace; }
+  .notes { display: none; }
+  body.notes-on .slide.is-active .notes {
+    display: block; position: absolute; left: 0; right: 0; bottom: 0;
+    background: var(--ink); color: var(--paper); padding: 1.4cqi 7cqi 1.8cqi;
+    font-size: 1.45cqi; line-height: 1.4; border-top: .35cqi solid var(--accent);
+  }
+  body.notes-on .slide.is-active .notes::before {
+    content: "notatki · n"; display: block; font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 1cqi; letter-spacing: .12em; text-transform: uppercase; opacity: .6; margin-bottom: .4cqi;
+  }
+</style>
+
+<div class="stage" id="stage">
+
+  <!-- 1 · tytuł -->
+  <section class="slide title">
+    <div class="kicker">PHPers Bydgoszcz · 16.09.2026</div>
+    <h1>Your AI Knows PHP.<br>But Does It Know Your Project?</h1>
+    <p class="sub">Symfony AI Mate w praktyce, na przykładzie Syliusa</p>
+    <div class="foot">
+      <span>Michał Pysiak</span>
+      <span>Sylius</span>
+    </div>
+    <div class="notes">Jedno zdanie tezy w formie pytania. Model zna PHP i Symfony z treningu. Ale czy zna twój projekt? Różnicę robi nie kolejny lepszy model, tylko to, co dostaje w momencie potrzeby.</div>
+  </section>
+
+  <!-- 2 · o mnie -->
+  <section class="slide">
+    <div class="eyebrow">O mnie</div>
+    <h2>Robię DX dla AI w Syliusie. <span class="q">To jest case study.</span></h2>
+    <div class="isnot">
+      <div class="is">
+        <h3>Kim jestem</h3>
+        <ul>
+          <li>Michał Pysiak, Sylius</li>
+          <li>developer experience dla agentów AI w ekosystemie Syliusa</li>
+        </ul>
+      </div>
+      <div class="is">
+        <h3>Co dziś pokażę</h3>
+        <ul>
+          <li>ostatnie miesiące: co działało, co nie i dlaczego</li>
+          <li>jedno demo na żywo, ten sam prompt dwa razy</li>
+        </ul>
+      </div>
+    </div>
+    <div class="notes">30 sekund, bez CV.</div>
+  </section>
+
+  <!-- 3 · jak to szło u nas -->
+  <section class="slide" data-steps="2">
+    <div class="eyebrow">Jak to szło u nas</div>
+    <h2>Najpierw goły prompt, <span class="q">potem coraz dłuższe instrukcje</span></h2>
+    <div class="duo">
+      <div class="card step" data-step="1">
+        <div class="tag">Era 1 · goły prompt</div>
+        <h3>Model zgaduje</h3>
+        <ul>
+          <li>wymyślone nazwy serwisów i helperów Twiga</li>
+          <li><code>cache:clear</code> jako uniwersalna naprawa</li>
+          <li>kod, który się kompiluje, ale łamie konwencje: DI, mailer, hooki</li>
+          <li>pisząc nasz skill wymyślił 5 tooli, których nigdy nie było</li>
+        </ul>
+      </div>
+      <div class="card step" data-step="2">
+        <div class="tag">Era 2 · instrukcje</div>
+        <h3>Proza rośnie, zgadywanie nie znika</h3>
+        <ul>
+          <li>CLAUDE.md i AGENTS.md w repo, w katalogach, w home</li>
+          <li>instrukcje nieadekwatne do zadania czytane w każdej turze</li>
+        </ul>
+        <div class="sample">SKILL.md           ~250 linii, zawsze w kontekście
+anti-patterns.md   ~1 700 linii, 55 sekcji</div>
+      </div>
+    </div>
+    <span class="todo">TODO: 3–4 konkretne wpadki jako anegdoty</span>
+    <div class="notes">Anegdoty z pierwszych miesięcy. Zapamiętajcie ten slajd, wrócimy do niego jako do strony „same skille".</div>
+  </section>
+
+  <!-- 4 · proza nie skaluje -->
+  <section class="slide">
+    <div class="eyebrow">Diagnoza</div>
+    <h2>Proza <span class="q">nie skaluje</span></h2>
+    <div class="isnot">
+      <div class="not">
+        <h3>Zgadywanie z kodu</h3>
+        <ul>
+          <li>czytaj 10+ plików, grep, wnioskuj</li>
+          <li>tysiące tokenów, głównie szum</li>
+          <li>opisuje projekt „jak był", nie „jak jest"</li>
+          <li>niedeterministyczne, nie da się poprawić</li>
+        </ul>
+      </div>
+      <div class="is">
+        <h3>Jedno wywołanie</h3>
+        <ul>
+          <li>jeden celowany call w momencie potrzeby</li>
+          <li>kompaktowa, ustrukturyzowana odpowiedź</li>
+          <li>zmierzone z runtime'u, „jak jest"</li>
+          <li>deterministyczne, <strong>poprawiasz tool</strong></li>
+        </ul>
+      </div>
+    </div>
+    <p class="thesis">Guess in <mark>→</mark> guess out.<span class="by">Dave Liddament, via Johannes Wachter · SymfonyLive Berlin 2026</span></p>
+    <div class="notes">Kontekst ma budżet. Fakt o projekcie powinien przyjść w momencie potrzeby, zmierzony, tani. Nie siedzieć w kontekście na zapas. Jedyna rzecz, którą da się optymalizować, to tool.</div>
+  </section>
+
+  <!-- 5 · demo przebieg 1 -->
+  <section class="slide demo">
+    <div class="eyebrow">Demo · przebieg 1</div>
+    <h2>Goły agent. <span class="q">Bez Mate, bez instrukcji.</span></h2>
+    <p class="lede">Sklep na Syliusie. Na liście produktów pokazujemy warianty, rozmiary i stan magazynowy.</p>
+    <div class="prompt"><span class="cur">›</span> Strona <span class="hi">https://127.0.0.1:8000/en_US/taxons/t-shirts/men</span> działa mi wolno - napraw</div>
+    <div class="watch">
+      <div><strong>Pierwszy ruch</strong>co robi, zanim cokolwiek zmieni</div>
+      <div><strong>Ile plików</strong>zanim dojdzie do przyczyny</div>
+      <div><strong>Ile minut</strong>zegar leci od entera</div>
+    </div>
+    <div class="notes">Odpalam prompt i przechodzę do następnych slajdów. Agent mieli w tle. Twardy limit 4 minuty, potem nagranie.</div>
+  </section>
+
+  <!-- 6 · harness -->
+  <section class="slide" data-steps="4">
+    <div class="eyebrow">Harness</div>
+    <h2>Pętla model ↔ narzędzia ↔ reguły. <span class="q">Kto egzekwuje?</span></h2>
+    <div class="chain">
+      <div class="node step" data-step="1">
+        <div class="tag">Warstwa 1</div>
+        <div class="name">Instrukcje</div>
+        <div class="desc">proza, zawsze w kontekście</div>
+        <div class="num">egzekwuje: model</div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="node step" data-step="2">
+        <div class="tag">Warstwa 2</div>
+        <div class="name">Skille</div>
+        <div class="desc">proza ładowana na żądanie</div>
+        <div class="num">egzekwuje: model</div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="node step" data-step="3">
+        <div class="tag">Warstwa 3</div>
+        <div class="name">Toole</div>
+        <div class="desc">deterministyczny kod, wynik = fakt</div>
+        <div class="num">egzekwuje: kod</div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="node step" data-step="4">
+        <div class="tag">Warstwa 4</div>
+        <div class="name">Hooki</div>
+        <div class="desc">kod odpalany przez agenta przed lub po akcji</div>
+        <div class="num">egzekwuje: harness</div>
+      </div>
+    </div>
+    <div class="chain-note">
+      <p><strong>Trzy pierwsze daje Mate.</strong> Hooki są w harnessach agentów: Claude Code, Cursor, Codex. W Mate jeszcze nie.</p>
+      <p><strong>Piramida Liddamenta:</strong> deterministyczne rzeczy na dole. Nie zgadują, wiedzą.</p>
+    </div>
+    <div class="notes">Mówione, gdy agent pracuje. Harness to wszystko wokół modelu. Im niżej, tym mniej zależy od dobrej woli modelu.</div>
+  </section>
+
+  <!-- 7 · proza vs tool -->
+  <section class="slide big">
+    <h1>Proza mówi <em>jak myśleć</em>.<br>Tool mówi <em>jak jest</em>.</h1>
+    <p class="lede">Odpowiedź z runtime'u zamiast inferencji. Powtarzalna, weryfikowalna, nie zużywa kontekstu, dopóki nie jest potrzebna. Model przestaje być encyklopedią projektu. Zostaje decydentem.</p>
+    <div class="notes">Wartość deterministycznego toola. Potem wracam do terminala: wynik przebiegu 1.</div>
+  </section>
+
+  <!-- 8 · wynik przebiegu 1 -->
+  <section class="slide">
+    <div class="eyebrow">Demo · przebieg 1 · wynik</div>
+    <h2>Dojdzie. <span class="q">W końcu.</span></h2>
+    <div class="isnot">
+      <div class="is">
+        <h3>Co widzieliśmy</h3>
+        <ul>
+          <li>czyta kontrolery, encje, szablony, konfig Doctrine</li>
+          <li>on <strong>wie</strong>, że profiler istnieje, i dobiera się do niego ręcznie</li>
+          <li>kilka tur łopatologii, zanim zobaczy zapytania</li>
+        </ul>
+      </div>
+      <div class="is">
+        <h3>Co to znaczy</h3>
+        <ul>
+          <li>wiedza jest, brakuje ścieżki</li>
+          <li>w małym projekcie trafi, w dużym ta sama metoda kosztuje więcej</li>
+        </ul>
+      </div>
+    </div>
+    <p class="thesis">Bez toola dojdzie. Pytanie: <mark>za ile</mark>.</p>
+    <div class="notes">Pokazuję terminal: licznik tur i plików, zegar. Model zna Symfony, próbuje curl na /_profiler, czytać pliki z var/cache.</div>
+  </section>
+
+  <!-- 9 · Mate* -->
+  <section class="slide demo">
+    <div class="eyebrow">Symfony AI Mate*</div>
+    <h2>„Serwer MCP dla projektu Symfony”<span class="q">*</span></h2>
+    <p class="lede">Tak wszedł do świata i tak go znacie z Berlina. Dev dependency, nic więcej.</p>
+    <div class="prompt small"><span class="cur">$</span> composer require --dev symfony/ai-mate symfony/ai-symfony-mate-extension</div>
+    <div class="watch">
+      <div><strong>Dla Syliusa</strong>robi się to samo, za chwilę</div>
+      <div><strong>Co jest w środku</strong>po demo</div>
+      <div><strong>* gwiazdka</strong>wrócimy do niej na końcu</div>
+    </div>
+    <div class="notes">Zajawka, 30 sekund.</div>
+  </section>
+
+  <!-- 10 · mate init -->
+  <section class="slide">
+    <div class="eyebrow">Demo · <code>mate init</code> na żywo</div>
+    <h2>Paczki są w vendorze. <span class="q">Agent ich nie widzi.</span></h2>
+    <div class="split">
+      <div class="term"><span class="dim">$</span> vendor/bin/mate init
+<span class="dim">$</span> vendor/bin/mate tools:list
+
+<span class="hi">AGENTS.md</span>          blok instrukcji (+ @AGENTS.md w CLAUDE.md)
+<span class="hi">mate/</span>              config, rejestr ekstensji,
+                   AGENT_INSTRUCTIONS.md
+<span class="hi">.agents/skills/</span>    5 skilli: 2 z rdzenia,
+                   3 z rozszerzenia Symfony</div>
+      <ul>
+        <li>zero sieci, sekundy</li>
+        <li>od tej chwili agent <strong>widzi</strong>, czym może pytać</li>
+        <li><code>tools:list</code> to dokładnie to, co czyta agent</li>
+      </ul>
+    </div>
+    <div class="notes">Pokazuję blok w AGENTS.md i skille. Bez .mcp.json, ale o tym na końcu.</div>
+  </section>
+
+  <!-- 11 · demo przebieg 2 -->
+  <section class="slide demo">
+    <div class="eyebrow">Demo · przebieg 2</div>
+    <h2>Ten sam prompt. <span class="q">Nowa sesja.</span></h2>
+    <p class="lede">Ten sam model. Ten sam projekt. Ten sam problem.</p>
+    <div class="prompt"><span class="cur">›</span> Strona <span class="hi">https://127.0.0.1:8000/en_US/taxons/t-shirts/men</span> działa mi wolno - napraw</div>
+    <div class="watch">
+      <div><strong>Pierwszy ruch</strong>skill profilera, potem tool profilera</div>
+      <div><strong>Ile plików</strong>zanim zobaczy zapytania</div>
+      <div><strong>Koniec demo</strong>na wywołaniu toola, fix dochodzi w tle</div>
+    </div>
+    <div class="notes">Pierwszy ruch: skill, potem tool. Nie grep. Demo kończy się na tym wywołaniu.</div>
+  </section>
+
+  <!-- 12 · co dostał agent -->
+  <section class="slide">
+    <div class="eyebrow">Demo · co dostał agent</div>
+    <h2>Jedno wywołanie. <span class="q">111 zapytań, 45 identycznych.</span></h2>
+    <div class="split">
+      <div class="term">{
+  "query_count": <span class="hi">111</span>,
+  "distinct_statements": 19,
+  "duplicates": [
+    {
+      "sql": "SELECT … FROM sylius_product_option_value
+              … WHERE variant_id = ?",
+      "count": <span class="hi">45</span>
+    }
+  ]
+}</div>
+      <ul>
+        <li>kompaktowe, ustrukturyzowane, do działania</li>
+        <li>agent nie musi czytać kodu, żeby wiedzieć, gdzie jest problem</li>
+        <li><strong>profiler zawsze wie, zgadywanie nigdy</strong></li>
+      </ul>
+    </div>
+    <span class="todo">TODO: realny output toola z przebiegu 2</span>
+    <div class="notes">Format przybliżony, do podmiany na realny output z bridge'a.</div>
+  </section>
+
+  <!-- 13 · trzy wnioski -->
+  <section class="slide" data-steps="3">
+    <div class="eyebrow">Co właśnie widzieliście</div>
+    <h2>Wiedza była w obu. <span class="q">Ścieżka w jednym.</span></h2>
+    <ol class="steps">
+      <li class="step" data-step="1"><span>W obu przypadkach agent <strong>dojdzie</strong>.<span class="sub">Kwestia czasu i tokenów.</span></span></li>
+      <li class="step" data-step="2"><span>W obu poszedł do <strong>profilera</strong>, jak developer.<span class="sub">Goły: kilka tur łopatologii. Z Mate: pierwszy ruch, bo skill powiedział kiedy, a tool dał jak.</span></span></li>
+      <li class="step" data-step="3"><span>Agent nie jest mądrzejszy. <strong>Inne otoczenie.</strong><span class="sub">Ten sam model, ten sam prompt, ten sam projekt.</span></span></li>
+    </ol>
+    <div class="notes">Tury i czas widzieliście na żywo. O tokenach tylko jakościowo. Jeśli test Haiku z Mate wyjdzie: jedno zdanie tutaj.</div>
+  </section>
+
+  <!-- 14 · czym jest Mate -->
+  <section class="slide">
+    <div class="eyebrow">Czym jest Mate</div>
+    <h2>Ekstensje, <span class="q">własne toole, własne skille</span></h2>
+    <div class="cols cols-2x2">
+      <div class="gain">
+        <h3>Component symfony/ai</h3>
+        <p class="ex">dev-only, własny kontener obok aplikacji; agent pyta przez CLI: <code>tools:list</code> · <code>tools:inspect</code> · <code>tools:call</code></p>
+      </div>
+      <div class="gain">
+        <h3>Ekstensja = paczka Composera</h3>
+        <p class="ex"><code>extra.ai-mate</code>: scan-dirs, instructions, skills; wykrywana przy instalacji. Symfony, Monolog, społeczność, Sylius</p>
+      </div>
+      <div class="gain">
+        <h3>Własny tool bez ekstensji</h3>
+        <p class="ex">metoda z <code>#[MateTool(name, description)]</code> w <code>mate/src/</code>, DI działa; <code>init</code> już dodał scan-dir</p>
+      </div>
+      <div class="gain">
+        <h3>Własny skill</h3>
+        <p class="ex">katalog w ekstensji, ląduje w <code>.agents/skills/mate-*</code>. To, co widzieliście po <code>mate init</code>, tylko wasze</p>
+      </div>
+    </div>
+    <div class="notes">Teraz, gdy sala widziała efekt: co jest w środku. INSTRUCTIONS.md mówi agentowi kiedy.</div>
+  </section>
+
+  <!-- 15 · synergia -->
+  <section class="slide" data-steps="3">
+    <div class="eyebrow">Synergia</div>
+    <h2>Skille + toole <span class="q">> każde z osobna</span></h2>
+    <div class="clocks">
+      <div class="clock step" data-step="1">
+        <div class="tag">Same skille</div>
+        <h3>Proza puchnie</h3>
+        <p>Model dalej zgaduje. Nasza era 2.</p>
+        <div class="score">slajd 3</div>
+      </div>
+      <div class="clock step" data-step="2">
+        <div class="tag">Same toole</div>
+        <h3>Binarka w vendorze</h3>
+        <p>Agent nie wie, że ma czym pytać.</p>
+        <div class="score">Mate Lab: goły CLI 0/10</div>
+      </div>
+      <div class="clock step" data-step="3">
+        <div class="tag">Razem</div>
+        <h3>Kiedy + jak jest</h3>
+        <p>Skill mówi kiedy i po co. Tool mówi jak jest.</p>
+        <div class="score">Mate Lab: 10/10</div>
+      </div>
+    </div>
+    <div class="rules">
+      <p><strong>Widzieliście to na żywo:</strong> skill profilera + tool profilera.</p>
+      <p><strong>Dlatego</strong> Mate od 0.13 dystrybuuje skille natywnie, a my wersjonujemy skill z toolami w jednej paczce.</p>
+    </div>
+    <div class="notes">Sedno środka. Ten sam model, Haiku, 10 przebiegów: bez warstwy plikowej 0/10, z nią 10/10. Decyduje widoczność.</div>
+  </section>
+
+  <!-- 16 · extension = fakty -->
+  <section class="slide">
+    <div class="eyebrow">Nasz case · sylius/sylius-mate-extension</div>
+    <h2>Ten sam mechanizm, <span class="q">nasza domena: fakty</span></h2>
+    <div class="split">
+      <ul>
+        <li><strong>29 tooli nad zbootowanym kernelem</strong> aplikacji: agent pyta kontener, nie zgaduje</li>
+        <li><code>sylius_project_profile</code> · <code>sylius_installed_plugins</code> z mapą dekoratorów · hooki · gridy · resource'y</li>
+        <li>scaffoldy bez kernela</li>
+        <li>„dlaczego mój blok nie renderuje się na stronie produktu?” → <code>sylius_hooks_find_for_template</code> zamiast grepa po szablonach</li>
+      </ul>
+      <div class="term"><span class="dim">$</span> vendor/bin/mate tools:call sylius_project_profile
+
+<span class="dim">{ … }</span></div>
+    </div>
+    <span class="todo">TODO: realny output sylius_project_profile</span>
+    <div class="notes">Nie profiler jest magiczny, tylko mechanizm zmierzonego faktu.</div>
+  </section>
+
+  <!-- 17 · skill = osąd -->
+  <section class="slide">
+    <div class="eyebrow">Nasz case · skille</div>
+    <h2>Toole to fakty. <span class="q">Skill to osąd.</span></h2>
+    <div class="split">
+      <ul>
+        <li>rodzina sześciu skilli <code>mate-sylius-*</code></li>
+        <li><strong>kiedy który tool</strong>: zamiast opisywać projekt, mówimy, jak go zapytać</li>
+        <li>verify pass, bramka Playwright</li>
+        <li><strong>55 refuse-rules</strong>: pułapki DI, mailera, hooków jako reguły, nie esej</li>
+        <li>wersjonowane razem z toolami, w jednej paczce. Upstream doszedł do tego samego</li>
+      </ul>
+      <div class="term"><span class="dim">$</span> ls .agents/skills/
+mate-sylius-dev
+mate-sylius-events
+mate-sylius-frontend
+mate-sylius-mailer
+mate-sylius-resource
+mate-sylius-verify</div>
+    </div>
+    <span class="todo">TODO: screenshot z prawdziwego checkoutu</span>
+    <div class="notes">Skill skurczony do osądu.</div>
+  </section>
+
+  <!-- 18 · takeaway + klamra -->
+  <section class="slide">
+    <div class="eyebrow">Your project</div>
+    <h2>Harness engineering + context engineering <span class="q">> model</span></h2>
+    <div class="isnot">
+      <div class="is">
+        <h3>Zacznij od</h3>
+        <ul>
+          <li>jednego toola, który zastępuje najczęstsze zgadywanie</li>
+          <li>jednego skilla, który mówi, kiedy go użyć</li>
+          <li>pomiaru, czy agent go używa. Nie zakładaj</li>
+        </ul>
+      </div>
+      <div class="is">
+        <h3>Dwie dyscypliny</h3>
+        <ul>
+          <li><strong>context:</strong> co i kiedy trafia do kontekstu</li>
+          <li><strong>harness:</strong> co egzekwuje środowisko zamiast modelu</li>
+        </ul>
+      </div>
+    </div>
+    <p class="thesis">Przestań czekać na lepszy model. <mark>Zbuduj mu lepsze otoczenie.</mark><span class="by">przy dzisiejszych modelach różnica między harnessami jest większa niż różnica między modelami</span></p>
+    <div class="notes">Takeaway i klamra. Ostatnie zdanie to teza.</div>
+  </section>
+
+  <!-- 19 · a propos MCP -->
+  <section class="slide" data-steps="2">
+    <div class="eyebrow">* A propos MCP</div>
+    <h2>Ktoś zauważył, że <span class="q">nie było <code>.mcp.json</code>?</span></h2>
+    <div class="duo">
+      <div class="card step" data-step="1">
+        <div class="tag">Berlin · kwiecień 2026</div>
+        <h3>„Why MCP, Not Just a CLI?”</h3>
+        <ul>
+          <li>interactive context</li>
+          <li>jeden standard dla wielu agentów</li>
+          <li>per-tool zgody</li>
+        </ul>
+      </div>
+      <div class="card step" data-step="2">
+        <div class="tag">Mate 0.13 · wrzesień 2026</div>
+        <h3>Autor usunął serwer MCP</h3>
+        <ul>
+          <li>został CLI <code>tools:*</code> + pliki</li>
+          <li>Mate Lab: MCP 3/10, CLI + pliki 10/10</li>
+          <li>decyduje <strong>widoczność, nie transport</strong></li>
+        </ul>
+      </div>
+    </div>
+    <p class="thesis">„Ilość pracy włożonej w architekturę mówi zaskakująco mało o tym, czy powinna przetrwać kolejną.”<span class="by">Johannes Wachter · The hardest code to delete. Ostatni dowód tezy: nawet transport tooli okazał się kwestią harnessu.</span></p>
+    <div class="notes">Jego argumenty sprzed pięciu miesięcy, obalone jego własnym pomiarem. Koszt: uprawnienia z shella zamiast per-tool.</div>
+  </section>
+
+  <!-- 20 · dzięki -->
+  <section class="slide title">
+    <div class="kicker">Dzięki</div>
+    <h1>Pytania?</h1>
+    <p class="sub">sylius/sylius-ai-dev-tools · sylius/sylius-mate-extension<br>symfony.com/doc/current/ai/components/mate.html<br>johanneswachter.dev/blog: mate-lab, the-hardest-code-to-delete</p>
+    <div class="foot">
+      <span>Michał Pysiak</span>
+      <span class="todo" style="margin:0">TODO: QR + link do slajdów</span>
+    </div>
+    <div class="notes">Zostaje na ekranie na Q&amp;A.</div>
+  </section>
+
+  <div class="hint">← → · f pełny ekran · n notatki</div>
+  <div class="counter" id="counter"></div>
+  <div class="progress" id="progress"></div>
+</div>
+
+<script>
+(function () {
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var counter = document.getElementById('counter');
+  var progress = document.getElementById('progress');
+  var idx = 0, step = 1;
+
+  function stepsOf(i) { return parseInt(slides[i].getAttribute('data-steps') || '0', 10); }
+  function fromHash() {
+    var n = parseInt((location.hash || '').replace('#', ''), 10);
+    return isNaN(n) ? 0 : Math.min(Math.max(n - 1, 0), slides.length - 1);
+  }
+  function paint() {
+    slides.forEach(function (s, k) { s.classList.toggle('is-active', k === idx); });
+    var nodes = slides[idx].querySelectorAll('.step');
+    Array.prototype.forEach.call(nodes, function (n) {
+      n.classList.toggle('hot', parseInt(n.getAttribute('data-step'), 10) === step);
+    });
+    var max = stepsOf(idx);
+    counter.textContent = (idx + 1) + ' / ' + slides.length + (max ? '  ·  ' + step + '/' + max : '');
+    progress.style.width = ((idx + 1) / slides.length * 100) + '%';
+    if (location.hash !== '#' + (idx + 1)) history.replaceState(null, '', '#' + (idx + 1));
+  }
+  function go(i, fromRight) {
+    idx = Math.min(Math.max(i, 0), slides.length - 1);
+    var max = stepsOf(idx);
+    step = fromRight && max ? max : 1;
+    paint();
+  }
+  function next() { var max = stepsOf(idx); if (max && step < max) { step++; paint(); } else { go(idx + 1, false); } }
+  function prev() { var max = stepsOf(idx); if (max && step > 1) { step--; paint(); } else { go(idx - 1, true); } }
+  document.getElementById('stage').addEventListener('click', function (e) {
+    if (e.target.closest('a')) return;
+    var r = e.currentTarget.getBoundingClientRect();
+    (e.clientX - r.left < r.width * 0.25) ? prev() : next();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    switch (e.key) {
+      case 'ArrowRight': case 'ArrowDown': case ' ': case 'PageDown': e.preventDefault(); next(); break;
+      case 'ArrowLeft': case 'ArrowUp': case 'PageUp': e.preventDefault(); prev(); break;
+      case 'Home': e.preventDefault(); go(0, false); break;
+      case 'End': e.preventDefault(); go(slides.length - 1, false); break;
+      case 'n': case 'N': document.body.classList.toggle('notes-on'); break;
+      case 'f': case 'F':
+        var root = document.documentElement;
+        if (document.fullscreenElement) { document.exitFullscreen(); }
+        else if (root.requestFullscreen) { root.requestFullscreen(); }
+        break;
+    }
+  });
+  window.addEventListener('hashchange', function () { if (fromHash() !== idx) go(fromHash(), false); });
+  go(fromHash(), false);
+})();
+</script>
