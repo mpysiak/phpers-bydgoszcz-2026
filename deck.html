@@ -136,6 +136,7 @@
   /* ---- grids ---- */
   .cols { display: grid; gap: 3cqi; flex: 1; min-height: 0; }
   .cols-2 { grid-template-columns: 1fr 1fr; }
+  .cols-3 { grid-template-columns: 1fr 1fr 1fr; align-content: start; gap: 3.5cqi; }
   .cols-2x2 { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 2.4cqi 3.5cqi; }
   .why h3, .gain h3 {
     font-family: "Bricolage Grotesque", "Instrument Sans", Arial, sans-serif;
@@ -525,29 +526,25 @@
     <div class="notes">Tury i czas widzieliście na żywo. O tokenach tylko jakościowo. Jeśli test Haiku z Mate wyjdzie: jedno zdanie tutaj.</div>
   </section>
 
-  <!-- 14 · czym jest Mate -->
+  <!-- 14 · extensions -->
   <section class="slide">
-    <div class="eyebrow">Czym jest Mate</div>
-    <h2>Ekstensje, <span class="q">własne toole, własne skille</span></h2>
-    <div class="cols cols-2x2">
+    <div class="eyebrow">Jak to rozszerzyć</div>
+    <h2>Extensions, <span class="q">własne toole, własne skille</span></h2>
+    <div class="cols cols-3 what">
       <div class="gain">
-        <h3>Component symfony/ai</h3>
-        <p class="ex">dev-only, własny kontener obok aplikacji; agent pyta przez CLI: <code>tools:list</code> · <code>tools:inspect</code> · <code>tools:call</code></p>
-      </div>
-      <div class="gain">
-        <h3>Ekstensja = paczka Composera</h3>
+        <h3>Extension = paczka Composera</h3>
         <p class="ex"><code>extra.ai-mate</code>: scan-dirs, instructions, skills; wykrywana przy instalacji. Symfony, Monolog, społeczność, Sylius</p>
       </div>
       <div class="gain">
-        <h3>Własny tool bez ekstensji</h3>
+        <h3>Własny tool bez extensiona</h3>
         <p class="ex">metoda z <code>#[MateTool(name, description)]</code> w <code>mate/src/</code>, DI działa; <code>init</code> już dodał scan-dir</p>
       </div>
       <div class="gain">
         <h3>Własny skill</h3>
-        <p class="ex">katalog w ekstensji, ląduje w <code>.agents/skills/mate-*</code>. To, co widzieliście po <code>mate init</code>, tylko wasze</p>
+        <p class="ex">katalog w extensionie, ląduje w <code>.agents/skills/mate-*</code>. To, co widzieliście po <code>mate init</code>, tylko wasze</p>
       </div>
     </div>
-    <div class="notes">Teraz, gdy sala widziała efekt: co jest w środku. INSTRUCTIONS.md mówi agentowi kiedy.</div>
+    <div class="notes">Teraz, gdy sala widziała efekt: jak to rozszerzyć. INSTRUCTIONS.md mówi agentowi kiedy.</div>
   </section>
 
   <!-- 15 · synergia -->
