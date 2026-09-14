@@ -184,6 +184,7 @@
 
   /* ---- cards ---- */
   .duo { display: grid; grid-template-columns: 1fr 1fr; gap: 3cqi; flex: 1; min-height: 0; }
+  .duo + .thesis { margin-top: 2.4cqi; }
   .card {
     background: var(--paper-2); border: 1px solid var(--line); border-radius: .6cqi;
     padding: 2cqi 2.2cqi; display: flex; flex-direction: column; gap: 1cqi;
@@ -299,25 +300,25 @@
         <div class="tag">Era 1 · goły prompt</div>
         <h3>Model zgaduje</h3>
         <ul>
-          <li>wymyślone nazwy serwisów i helperów Twiga</li>
-          <li><code>cache:clear</code> jako uniwersalna naprawa</li>
-          <li>kod, który się kompiluje, ale łamie konwencje: DI, mailer, hooki</li>
-          <li>pisząc nasz skill wymyślił 5 tooli, których nigdy nie było</li>
+          <li>model <strong>musi</strong> coś odpowiedzieć, nawet gdy nie wie</li>
+          <li>to, czego nie ma w kontekście, dopowiada z treningu: nazwy serwisów, trasy, klucze konfigu</li>
+          <li><strong>niedeterminizm:</strong> to samo pytanie, dwie różne odpowiedzi</li>
+          <li><strong>zero kontroli:</strong> nie wiemy, kiedy zgadł, a kiedy wiedział</li>
         </ul>
       </div>
       <div class="card step" data-step="2">
         <div class="tag">Era 2 · instrukcje</div>
         <h3>Proza rośnie, zgadywanie nie znika</h3>
         <ul>
-          <li>CLAUDE.md i AGENTS.md w repo, w katalogach, w home</li>
-          <li>instrukcje nieadekwatne do zadania czytane w każdej turze</li>
+          <li>odruch: opiszmy mu projekt. CLAUDE.md, AGENTS.md, w repo, w katalogach, w home</li>
+          <li>każda sesja płaci za całość, także za to, czego nie dotyka</li>
+          <li>u nas: skill ~250 linii zawsze w kontekście, anty-wzorce ~1 700 linii w 55 sekcjach</li>
+          <li>i dalej: kod, który się kompiluje, ale łamie konwencje projektu</li>
         </ul>
-        <div class="sample">SKILL.md           ~250 linii, zawsze w kontekście
-anti-patterns.md   ~1 700 linii, 55 sekcji</div>
       </div>
     </div>
-    <span class="todo">TODO: 3–4 konkretne wpadki jako anegdoty</span>
-    <div class="notes">Anegdoty z pierwszych miesięcy. Zapamiętajcie ten slajd, wrócimy do niego jako do strony „same skille".</div>
+    <p class="thesis">Zgadywanie nie jest błędem modelu. <mark>Jest tym, co model robi, gdy nie ma faktu.</mark></p>
+    <div class="notes">Era 1: model zgaduje, bo musi odpowiedzieć. Era 2: nasza reakcja, instrukcje. Zapamiętajcie ten slajd, wrócimy do niego jako do strony „same skille".</div>
   </section>
 
   <!-- 4 · proza nie skaluje -->
