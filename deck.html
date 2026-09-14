@@ -183,18 +183,19 @@
   @media (prefers-reduced-motion: reduce) { .node { transition: none; } }
 
   /* ---- pyramid ---- */
-  .pyr-wrap { display: grid; grid-template-columns: auto 1.35fr 1fr; gap: 3cqi; flex: 1; min-height: 0; align-items: center; }
+  .pyr-wrap { display: grid; grid-template-columns: auto auto 1fr; gap: 3cqi; flex: 1; min-height: 0; align-items: center; justify-items: start; }
   .axis { display: flex; flex-direction: column; align-items: center; gap: .8cqi; height: 100%; justify-content: center;
     font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 1.1cqi; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
-  .axis i { flex: 0 0 26cqi; width: .25cqi; background: linear-gradient(var(--warn), var(--accent)); border-radius: .2cqi; }
-  .pyr { width: 100%; height: auto; max-height: 44cqi; display: block; }
+  .axis i { flex: 0 0 22cqi; width: .25cqi; background: linear-gradient(var(--warn), var(--accent)); border-radius: .2cqi; }
+  .pyr { height: 32cqi; width: auto; display: block; }
   .pyr polygon { fill: var(--paper-2); stroke: var(--line); stroke-width: .3; transition: fill .2s ease; }
   .pyr text { font-family: "Instrument Sans", Arial, sans-serif; font-size: 3.1px; fill: var(--ink); font-weight: 600; }
   .pyr text.sub { font-size: 2.3px; font-weight: 400; fill: var(--muted); }
   .pyr .hi { fill: var(--accent); font-weight: 600; }
   .pyr .step.hot polygon { fill: var(--accent); stroke: var(--accent); }
   .pyr .step.hot text, .pyr .step.hot text.sub, .pyr .step.hot .hi { fill: var(--accent-ink); }
-  .pyr-side { font-size: 2cqi; display: flex; flex-direction: column; gap: 1.4cqi; }
+  .pyr-side { font-size: 1.9cqi; display: flex; flex-direction: column; gap: 1.2cqi; }
+  .pyr-wrap + .thesis { margin-top: 1.6cqi; font-size: 2.1cqi; padding: 1.2cqi 1.8cqi; }
   @media (prefers-reduced-motion: reduce) { .pyr polygon { transition: none; } }
 
   /* ---- cards ---- */
