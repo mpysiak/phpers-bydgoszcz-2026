@@ -182,6 +182,21 @@
   .chain-note strong { color: var(--accent); }
   @media (prefers-reduced-motion: reduce) { .node { transition: none; } }
 
+  /* ---- pyramid ---- */
+  .pyr-wrap { display: grid; grid-template-columns: auto 1.35fr 1fr; gap: 3cqi; flex: 1; min-height: 0; align-items: center; }
+  .axis { display: flex; flex-direction: column; align-items: center; gap: .8cqi; height: 100%; justify-content: center;
+    font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 1.1cqi; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+  .axis i { flex: 0 0 26cqi; width: .25cqi; background: linear-gradient(var(--warn), var(--accent)); border-radius: .2cqi; }
+  .pyr { width: 100%; height: auto; max-height: 44cqi; display: block; }
+  .pyr polygon { fill: var(--paper-2); stroke: var(--line); stroke-width: .3; transition: fill .2s ease; }
+  .pyr text { font-family: "Instrument Sans", Arial, sans-serif; font-size: 3.1px; fill: var(--ink); font-weight: 600; }
+  .pyr text.sub { font-size: 2.3px; font-weight: 400; fill: var(--muted); }
+  .pyr .hi { fill: var(--accent); font-weight: 600; }
+  .pyr .step.hot polygon { fill: var(--accent); stroke: var(--accent); }
+  .pyr .step.hot text, .pyr .step.hot text.sub, .pyr .step.hot .hi { fill: var(--accent-ink); }
+  .pyr-side { font-size: 2cqi; display: flex; flex-direction: column; gap: 1.4cqi; }
+  @media (prefers-reduced-motion: reduce) { .pyr polygon { transition: none; } }
+
   /* ---- cards ---- */
   .duo { display: grid; grid-template-columns: 1fr 1fr; gap: 3cqi; flex: 1; min-height: 0; }
   .duo + .thesis { margin-top: 2cqi; font-size: 2.1cqi; padding: 1.2cqi 1.8cqi; }
@@ -358,44 +373,42 @@
     <div class="notes">Odpalam prompt i przechodzę do następnych slajdów. Agent mieli w tle. Twardy limit 4 minuty, potem nagranie.</div>
   </section>
 
-  <!-- 6 · harness -->
+  <!-- 6 · piramida -->
   <section class="slide" data-steps="4">
-    <div class="eyebrow">Harness</div>
-    <h2>Pętla model ↔ narzędzia ↔ reguły. <span class="q">Kto egzekwuje?</span></h2>
-    <div class="chain">
-      <div class="node step" data-step="1">
-        <div class="tag">Warstwa 1</div>
-        <div class="name">Instrukcje</div>
-        <div class="desc">tekst, zawsze w kontekście</div>
-        <div class="num">egzekwuje: model</div>
+    <div class="eyebrow">Harness · wg Dave'a Liddamenta</div>
+    <h2>Co nie zgaduje, <span class="q">to wie</span></h2>
+    <div class="pyr-wrap">
+      <div class="axis">
+        <span>człowiek</span>
+        <i></i>
+        <span>maszyna</span>
       </div>
-      <div class="arrow">→</div>
-      <div class="node step" data-step="2">
-        <div class="tag">Warstwa 2</div>
-        <div class="name">Skille</div>
-        <div class="desc">tekst ładowany na żądanie</div>
-        <div class="num">egzekwuje: model</div>
-      </div>
-      <div class="arrow">→</div>
-      <div class="node step" data-step="3">
-        <div class="tag">Warstwa 3</div>
-        <div class="name">Toole</div>
-        <div class="desc">deterministyczny kod, wynik = fakt</div>
-        <div class="num">egzekwuje: kod</div>
-      </div>
-      <div class="arrow">→</div>
-      <div class="node step" data-step="4">
-        <div class="tag">Warstwa 4</div>
-        <div class="name">Hooki</div>
-        <div class="desc">kod odpalany przez agenta przed lub po akcji</div>
-        <div class="num">egzekwuje: harness</div>
+      <svg class="pyr" viewBox="0 0 100 68" role="img" aria-label="Piramida: deterministyczne sprawdzenia na dole, code review na górze">
+        <g class="step" data-step="4">
+          <polygon points="50,2 61.25,18 38.75,18"/>
+          <text x="50" y="14" text-anchor="middle">Code review</text>
+        </g>
+        <g class="step" data-step="3">
+          <polygon points="38.75,18 61.25,18 72.5,34 27.5,34"/>
+          <text x="50" y="27.6" text-anchor="middle">Plan mode</text>
+        </g>
+        <g class="step" data-step="2">
+          <polygon points="27.5,34 72.5,34 83.75,50 16.25,50"/>
+          <text x="50" y="43.6" text-anchor="middle">CLAUDE.md, skille, agenci</text>
+        </g>
+        <g class="step" data-step="1">
+          <polygon points="16.25,50 83.75,50 95,66 5,66"/>
+          <text x="50" y="57.4" text-anchor="middle">Deterministyczne sprawdzenia</text>
+          <text x="50" y="62.6" text-anchor="middle" class="sub">testy · analiza statyczna · <tspan class="hi">profiler · kontener</tspan></text>
+        </g>
+      </svg>
+      <div class="pyr-side">
+        <p><strong>Mate żyje na dole.</strong> Profiler, kontener, logi: rzeczy, które nie zgadują, tylko wiedzą.</p>
+        <p class="muted">Dół egzekwuje kod. Środek model. Góra człowiek.</p>
       </div>
     </div>
-    <div class="chain-note">
-      <p><strong>Trzy pierwsze daje Mate.</strong> Hooki są w harnessach agentów: Claude Code, Cursor, Codex. W Mate jeszcze nie.</p>
-      <p><strong>Piramida Liddamenta:</strong> deterministyczne rzeczy na dole. Nie zgadują, wiedzą.</p>
-    </div>
-    <div class="notes">Mówione, gdy agent pracuje. Harness to wszystko wokół modelu. Im niżej, tym mniej zależy od dobrej woli modelu.</div>
+    <p class="thesis">Wszystko wyżej działa tylko dlatego, że <mark>podstawa jest solidna</mark>.</p>
+    <div class="notes">Mówione, gdy agent pracuje. Piramida Liddamenta z SymfonyLive Berlin, Johannes dopisał do podstawy Mate. Podświetlam od dołu: kod, model, człowiek.</div>
   </section>
 
   <!-- 7 · proza vs tool -->
