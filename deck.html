@@ -198,6 +198,10 @@
   .pyr-wrap + .thesis { margin-top: 1.6cqi; font-size: 2.1cqi; padding: 1.2cqi 1.8cqi; }
   @media (prefers-reduced-motion: reduce) { .pyr polygon { transition: none; } }
 
+  .what .gain h3 { font-size: 2.5cqi; }
+  .what .gain .ex { font-size: 1.75cqi; }
+  .cols + .thesis { margin-top: 2cqi; font-size: 2.1cqi; padding: 1.2cqi 1.8cqi; line-height: 1.4; }
+
   /* ---- cards ---- */
   .duo { display: grid; grid-template-columns: 1fr 1fr; gap: 3cqi; flex: 1; min-height: 0; }
   .duo + .thesis { margin-top: 2cqi; font-size: 2.1cqi; padding: 1.2cqi 1.8cqi; }
@@ -438,17 +442,29 @@
   </section>
 
   <!-- 9 · Mate* -->
-  <section class="slide demo">
+  <section class="slide">
     <div class="eyebrow">Symfony AI Mate*</div>
-    <h2>„Serwer MCP dla projektu Symfony”<span class="q">*</span></h2>
-    <p class="lede">Tak wszedł do świata i tak go znacie z Berlina. Dev dependency, nic więcej.</p>
-    <div class="prompt small"><span class="cur">$</span> composer require --dev symfony/ai-mate symfony/ai-symfony-mate-extension</div>
-    <div class="watch">
-      <div><strong>Dla Syliusa</strong>robi się to samo, za chwilę</div>
-      <div><strong>Co jest w środku</strong>po demo</div>
-      <div><strong>* gwiazdka</strong>wrócimy do niej na końcu</div>
+    <h2>Czym jest <span class="q">Mate</span>*</h2>
+    <div class="cols cols-2x2 what">
+      <div class="gain">
+        <h3>Narzędzie deweloperskie</h3>
+        <p class="ex">dla aplikacji PHP i Symfony; dev dependency, component <code>symfony/ai</code>. „Serwer MCP”* — do gwiazdki wrócimy na końcu</p>
+      </div>
+      <div class="gain">
+        <h3>Dostęp do runtime'u</h3>
+        <p class="ex">profiler, logi, kontener, informacje o PHP — to, czego agent nie wyczyta z kodu</p>
+      </div>
+      <div class="gain">
+        <h3>Rozszerzalny</h3>
+        <p class="ex">własne toole (klasa z atrybutem) i własne skille; rozszerzenia jako zwykłe paczki Composera</p>
+      </div>
+      <div class="gain">
+        <h3>Z każdym agentem</h3>
+        <p class="ex">Claude Code, Codex, Cursor, Copilot, JetBrains AI</p>
+      </div>
     </div>
-    <div class="notes">Zajawka, 30 sekund.</div>
+    <p class="thesis outside"><span class="muted">Platform · Agent · Store → twoja aplikacja używa AI</span><br>Mate → <mark>AI używa twojej aplikacji</mark></p>
+    <div class="notes">Jak u Johannesa: outside-in. Reszta symfony/ai pozwala twojej aplikacji używać AI. Mate robi odwrotnie.</div>
   </section>
 
   <!-- 10 · mate init -->
