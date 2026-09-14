@@ -261,6 +261,7 @@
     font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 1.55cqi; line-height: 1.5; white-space: pre; overflow: hidden;
   }
   .term .hi { color: var(--term-hi); }
+  .big-term { font-size: 2cqi; padding: 2.4cqi 2.8cqi; margin: 1cqi 0 2.4cqi; }
   .term .dim { opacity: .55; }
   .split { display: grid; grid-template-columns: 1.15fr 1fr; gap: 3.5cqi; flex: 1; min-height: 0; }
   .split ul { font-size: 1.95cqi; }
@@ -468,26 +469,14 @@
   </section>
 
   <!-- 10 · mate init -->
-  <section class="slide">
-    <div class="eyebrow">Demo · <code>mate init</code> na żywo</div>
-    <h2>Paczki są w vendorze. <span class="q">Agent ich nie widzi.</span></h2>
-    <div class="split">
-      <div class="term"><span class="dim">$</span> vendor/bin/mate init
-<span class="dim">$</span> vendor/bin/mate tools:list
-
-<span class="hi">AGENTS.md</span>        blok instrukcji
-<span class="hi">CLAUDE.md</span>        import: @AGENTS.md
-<span class="hi">mate/</span>            config, rejestr ekstensji,
-                 AGENT_INSTRUCTIONS.md
-<span class="hi">.agents/skills/</span>  5 skilli: 2 z rdzenia,
-                 3 z rozszerzenia Symfony</div>
-      <ul>
-        <li>zero sieci, sekundy</li>
-        <li>od tej chwili agent <strong>widzi</strong>, czym może pytać</li>
-        <li><code>tools:list</code> to dokładnie to, co czyta agent</li>
-      </ul>
-    </div>
-    <div class="notes">Pokazuję blok w AGENTS.md i skille. Bez .mcp.json, ale o tym na końcu.</div>
+  <section class="slide demo">
+    <div class="eyebrow">Demo · instalacja</div>
+    <h2>Instalacja: <span class="q">trzy komendy</span></h2>
+    <div class="term big-term"><span class="dim">$</span> composer require --dev symfony/ai-mate symfony/ai-symfony-mate-extension
+<span class="dim">$</span> vendor/bin/mate init
+<span class="dim">$</span> vendor/bin/mate tools:list</div>
+    <p class="lede">Pierwsza zrobiona przed talkiem. Dwie następne na żywo.</p>
+    <div class="notes">Zero sieci, sekundy. W terminalu pokazuję blok w AGENTS.md i skille w .agents/skills. Bez .mcp.json, ale o tym na końcu.</div>
   </section>
 
   <!-- 11 · demo przebieg 2 -->
