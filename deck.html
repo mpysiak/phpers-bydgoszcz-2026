@@ -111,6 +111,22 @@
     font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 1.25cqi; color: var(--muted);
   }
 
+  /* ---- about ---- */
+  .about { display: grid; grid-template-columns: 1fr 1.4fr; gap: 5cqi; flex: 1; min-height: 0; align-items: center; }
+  .about .photo {
+    aspect-ratio: 1 / 1; max-height: 100%; border-radius: .8cqi; background: var(--paper-2); border: 1px solid var(--line);
+    display: grid; place-items: center; overflow: hidden;
+  }
+  .about .photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .about h3 {
+    font-family: "JetBrains Mono", ui-monospace, monospace; font-weight: 500; font-size: 1.2cqi;
+    letter-spacing: .12em; text-transform: uppercase; color: var(--muted);
+    margin: 0 0 1.4cqi; padding-bottom: .6cqi; border-bottom: 1px solid var(--line);
+  }
+  .about ul { list-style: none; padding: 0; }
+  .about li { padding-left: 1.6em; position: relative; font-size: 2.6cqi; margin-bottom: .6em; }
+  .about li::before { content: "●"; color: var(--accent); position: absolute; left: 0; font-size: .6em; top: .5em; }
+
   /* ---- big statement ---- */
   .big { justify-content: center; }
   .big h1 { font-size: 6.2cqi; max-width: 22ch; }
@@ -258,20 +274,16 @@
   <!-- 2 · o mnie -->
   <section class="slide">
     <div class="eyebrow">O mnie</div>
-    <h2>Robię DX dla AI w Syliusie. <span class="q">To jest case study.</span></h2>
-    <div class="isnot">
-      <div class="is">
-        <h3>Kim jestem</h3>
+    <h2>Cześć, jestem <span class="q">Michał Pysiak</span></h2>
+    <div class="about">
+      <div class="photo"><span class="todo" style="margin:0">TODO: zdjęcie</span></div>
+      <div>
+        <h3>Co robię w Syliusie</h3>
         <ul>
-          <li>Michał Pysiak, Sylius</li>
-          <li>developer experience dla agentów AI w ekosystemie Syliusa</li>
-        </ul>
-      </div>
-      <div class="is">
-        <h3>Co dziś pokażę</h3>
-        <ul>
-          <li>ostatnie miesiące: co działało, co nie i dlaczego</li>
-          <li>jedno demo na żywo, ten sam prompt dwa razy</li>
+          <li>B2B plugin</li>
+          <li>audyty</li>
+          <li>konsultacje na projektach</li>
+          <li>AI dev tools</li>
         </ul>
       </div>
     </div>
