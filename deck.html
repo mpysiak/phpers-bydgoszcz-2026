@@ -184,15 +184,16 @@
 
   /* ---- cards ---- */
   .duo { display: grid; grid-template-columns: 1fr 1fr; gap: 3cqi; flex: 1; min-height: 0; }
-  .duo + .thesis { margin-top: 2.4cqi; }
+  .duo + .thesis { margin-top: 2cqi; font-size: 2.1cqi; padding: 1.2cqi 1.8cqi; }
   .card {
     background: var(--paper-2); border: 1px solid var(--line); border-radius: .6cqi;
     padding: 2cqi 2.2cqi; display: flex; flex-direction: column; gap: 1cqi;
     transition: background-color .2s ease, color .2s ease, border-color .2s ease;
   }
   .card .tag { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 1.1cqi; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
-  .card h3 { font-family: "Bricolage Grotesque", "Instrument Sans", Arial, sans-serif; font-weight: 700; font-size: 2.4cqi; margin: 0; }
-  .card ul { font-size: 1.85cqi; }
+  .card h3 { font-family: "Bricolage Grotesque", "Instrument Sans", Arial, sans-serif; font-weight: 700; font-size: 2.2cqi; margin: 0; }
+  .card ul { font-size: 1.65cqi; }
+  .card li { margin-bottom: .45em; }
   .card.hot { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
   .card.hot .tag { color: var(--accent-ink); opacity: .8; }
   .card.hot code { background: rgba(255,255,255,.18); color: inherit; }
@@ -294,26 +295,26 @@
   <!-- 3 · jak to szło u nas -->
   <section class="slide" data-steps="2">
     <div class="eyebrow">Jak to szło u nas</div>
-    <h2>Najpierw goły prompt, <span class="q">potem coraz dłuższe instrukcje</span></h2>
+    <h2>Goły prompt, <span class="q">potem coraz dłuższe instrukcje</span></h2>
     <div class="duo">
       <div class="card step" data-step="1">
         <div class="tag">Era 1 · goły prompt</div>
         <h3>Model zgaduje</h3>
         <ul>
-          <li>model <strong>musi</strong> coś odpowiedzieć, nawet gdy nie wie</li>
-          <li>to, czego nie ma w kontekście, dopowiada z treningu: nazwy serwisów, trasy, klucze konfigu</li>
-          <li><strong>niedeterminizm:</strong> to samo pytanie, dwie różne odpowiedzi</li>
-          <li><strong>zero kontroli:</strong> nie wiemy, kiedy zgadł, a kiedy wiedział</li>
+          <li><strong>musi</strong> coś odpowiedzieć, nawet gdy nie wie</li>
+          <li>czego nie ma w kontekście, dopowiada z treningu</li>
+          <li><strong>niedeterminizm:</strong> to samo pytanie, dwie odpowiedzi</li>
+          <li><strong>zero kontroli:</strong> nie wiemy, kiedy zgadł</li>
         </ul>
       </div>
       <div class="card step" data-step="2">
         <div class="tag">Era 2 · instrukcje</div>
-        <h3>Proza rośnie, zgadywanie nie znika</h3>
+        <h3>Proza rośnie, zgadywanie zostaje</h3>
         <ul>
-          <li>odruch: opiszmy mu projekt. CLAUDE.md, AGENTS.md, w repo, w katalogach, w home</li>
+          <li>odruch: opiszmy mu projekt. CLAUDE.md, AGENTS.md, wszędzie</li>
           <li>każda sesja płaci za całość, także za to, czego nie dotyka</li>
-          <li>u nas: skill ~250 linii zawsze w kontekście, anty-wzorce ~1 700 linii w 55 sekcjach</li>
-          <li>i dalej: kod, który się kompiluje, ale łamie konwencje projektu</li>
+          <li>u nas: skill ~250 linii, anty-wzorce ~1 700 linii</li>
+          <li>kod się kompiluje, ale łamie konwencje projektu</li>
         </ul>
       </div>
     </div>
@@ -457,11 +458,12 @@
       <div class="term"><span class="dim">$</span> vendor/bin/mate init
 <span class="dim">$</span> vendor/bin/mate tools:list
 
-<span class="hi">AGENTS.md</span>          blok instrukcji (+ @AGENTS.md w CLAUDE.md)
-<span class="hi">mate/</span>              config, rejestr ekstensji,
-                   AGENT_INSTRUCTIONS.md
-<span class="hi">.agents/skills/</span>    5 skilli: 2 z rdzenia,
-                   3 z rozszerzenia Symfony</div>
+<span class="hi">AGENTS.md</span>        blok instrukcji
+<span class="hi">CLAUDE.md</span>        import: @AGENTS.md
+<span class="hi">mate/</span>            config, rejestr ekstensji,
+                 AGENT_INSTRUCTIONS.md
+<span class="hi">.agents/skills/</span>  5 skilli: 2 z rdzenia,
+                 3 z rozszerzenia Symfony</div>
       <ul>
         <li>zero sieci, sekundy</li>
         <li>od tej chwili agent <strong>widzi</strong>, czym może pytać</li>
@@ -495,7 +497,8 @@
   "distinct_statements": 19,
   "duplicates": [
     {
-      "sql": "SELECT … FROM sylius_product_option_value
+      "sql": "SELECT … FROM
+              sylius_product_option_value
               … WHERE variant_id = ?",
       "count": <span class="hi">45</span>
     }
