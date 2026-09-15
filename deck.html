@@ -265,6 +265,17 @@
   .big-term { font-size: 2cqi; padding: 2.4cqi 2.8cqi; margin: 1cqi 0 2.4cqi; }
   .term .dim { opacity: .55; }
   .split { display: grid; grid-template-columns: 1.15fr 1fr; gap: 3.5cqi; flex: 1; min-height: 0; }
+  .split.tools { grid-template-columns: 3fr 2fr; gap: 3cqi; }
+  .tools .lede { font-size: 1.8cqi; margin-bottom: 1.4cqi; max-width: none; }
+  .tools .lede em { font-style: normal; color: var(--accent); }
+  .split.tools ul { font-size: 1.55cqi; list-style: none; padding: 0; }
+  .tools li { margin-bottom: .6em; padding-left: 1.4em; position: relative; line-height: 1.35; }
+  .tools > div:last-child { display: flex; flex-direction: column; }
+  .tools .term { font-size: 1.4cqi; }
+  .tools li::before { content: "●"; color: var(--accent); position: absolute; left: 0; font-size: .65em; top: .45em; }
+  .tools li > code { margin-right: .35em; }
+  .tools .instead { display: block; color: var(--muted); font-size: .9em; }
+  .tools .instead::before { content: "→ "; color: var(--accent); }
   .split ul { font-size: 1.95cqi; }
   .split .term { align-self: start; }
 
@@ -578,23 +589,30 @@
     <div class="notes">Sedno środka. Ten sam model, Haiku, 10 przebiegów: bez warstwy plikowej 0/10, z nią 10/10. Decyduje widoczność.</div>
   </section>
 
-  <!-- 16 · extension = fakty -->
+  <!-- 15 · extension = fakty -->
   <section class="slide">
     <div class="eyebrow">Nasz case · sylius/sylius-mate-extension</div>
-    <h2>Ten sam mechanizm, <span class="q">nasza domena: fakty</span></h2>
-    <div class="split">
-      <ul>
-        <li><strong>29 tooli nad zbootowanym kernelem</strong> aplikacji: agent pyta kontener, nie zgaduje</li>
-        <li><code>sylius_project_profile</code> · <code>sylius_installed_plugins</code> z mapą dekoratorów · hooki · gridy · resource'y</li>
-        <li>scaffoldy bez kernela</li>
-        <li>„dlaczego mój blok nie renderuje się na stronie produktu?” → <code>sylius_hooks_find_for_template</code> zamiast grepa po szablonach</li>
-      </ul>
-      <div class="term"><span class="dim">$</span> vendor/bin/mate tools:call sylius_project_profile
+    <h2 style="margin-bottom:1.6cqi">Nasza domena: <span class="q">29 tooli nad Syliusem</span></h2>
+    <div class="split tools">
+      <div>
+        <p class="lede">Agent pyta zbootowany kernel <em>tego</em> projektu, nie zgaduje.</p>
+        <ul>
+          <li><code>sylius_project_profile</code> namespace, locale, kanał, mailer<span class="instead">zamiast czytania composer.json, .env i configów</span></li>
+          <li><code>sylius_installed_plugins</code> pluginy, dekoratory, encje<span class="instead">zamiast zgadywania, czy stock żyje w MSI</span></li>
+          <li><code>sylius_twig_function_verify</code> czy <code>sylius_*</code> istnieje i jaka sygnatura<span class="instead">zamiast wymyślonego helpera Twiga ze slajdu 3</span></li>
+          <li><code>sylius_routes_show</code> / <code>sylius_route_inspect</code> trasy, zdublowane prefiksy<span class="instead">zamiast <code>path()</code> do trasy, której nie ma</span></li>
+          <li><code>sylius_hooks_find_for_template</code> hook, w którym siedzi szablon<span class="instead">zamiast grepa po szablonach</span></li>
+        </ul>
+      </div>
+      <div>
+      <div class="term"><span class="dim">$</span> vendor/bin/mate tools:call \
+    sylius_project_profile
 
 <span class="dim">{ … }</span></div>
+        <span class="todo" style="margin-top:1.4cqi">TODO: realny output sylius_project_profile</span>
+      </div>
     </div>
-    <span class="todo">TODO: realny output sylius_project_profile</span>
-    <div class="notes">Nie profiler jest magiczny, tylko mechanizm zmierzonego faktu.</div>
+    <div class="notes">Nie profiler jest magiczny, tylko mechanizm zmierzonego faktu. Uczciwie: nasz extension bootuje kernel hosta (odwrotnie niż rdzeń Mate), bo hooków, gridów i dekoratorów nie da się wyczytać ze zrzutu XML.</div>
   </section>
 
   <!-- 17 · skill = osąd -->
