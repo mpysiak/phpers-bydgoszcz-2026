@@ -279,6 +279,7 @@
   .tools .instead::before { content: "→ "; color: var(--accent); }
   .split ul { font-size: 1.95cqi; }
   .split .term { align-self: start; }
+  .split.skills ul { font-size: 1.72cqi; }
 
   /* ---- nav & notes ---- */
   .notes { display: none; }
@@ -629,13 +630,12 @@
   <section class="slide">
     <div class="eyebrow">Nasz case · skille</div>
     <h2>Toole to fakty. <span class="q">Skill to osąd.</span></h2>
-    <div class="split">
+    <div class="split skills">
       <ul>
-        <li>rodzina sześciu skilli <code>mate-sylius-*</code></li>
-        <li><strong>kiedy który tool</strong>: zamiast opisywać projekt, mówimy, jak go zapytać</li>
-        <li>verify pass, bramka Playwright</li>
-        <li><strong>55 refuse-rules</strong>: pułapki DI, mailera, hooków jako reguły, nie esej</li>
-        <li>wersjonowane razem z toolami, w jednej paczce. Upstream doszedł do tego samego</li>
+        <li><strong>Sześć skilli, jedno wejście.</strong> <code>sylius-dev</code> daje model myślowy i protokół „najpierw Mate”, resztę po domenie: resource, frontend, events, mailer, verify</li>
+        <li><strong>Kiedy który tool.</strong> Zamiast opisywać projekt, skill mówi, jak go zapytać: profile → pluginy i dekoratory → hooki, zanim powstanie pierwszy plik</li>
+        <li><strong>55 refuse-rules zamiast eseju.</strong> Pułapki DI, mailera i hooków jako reguły w osobnym pliku na żądanie. Sam <code>SKILL.md</code> ma 30–90 linii</li>
+        <li><strong>Definicja DONE.</strong> <code>sylius-verify</code>: verify pass, cache, bramka Playwright</li>
       </ul>
       <div class="term"><span class="dim">$</span> ls .agents/skills/
 <span class="dim">mate-php-environment-check</span>
@@ -650,7 +650,7 @@
 <span class="dim">mate-symfony-service-inspection</span>
 <span class="dim">mate-system-information</span></div>
     </div>
-    <div class="notes">Skill skurczony do osądu.</div>
+    <div class="notes">Skill skurczony do osądu. Skille wersjonowane razem z toolami, w jednej paczce — upstream (Mate 0.13) doszedł do tego samego. Pięć przygaszonych to skille z rdzenia Mate i bridge'a Symfony, te same, które sala widziała w demo.</div>
   </section>
 
   <!-- 18 · takeaway + klamra -->
