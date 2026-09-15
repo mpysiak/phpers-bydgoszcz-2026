@@ -106,6 +106,10 @@
     font-size: 1.4cqi; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 2cqi;
   }
   .title .sub { font-size: 2.6cqi; color: var(--muted); margin-top: 2cqi; max-width: 40ch; }
+  .thanks .qr-wrap { position: absolute; right: 7cqi; top: 50%; transform: translateY(-50%); width: 24cqi; padding: 1.4cqi; background: #fff; border-radius: .8cqi; box-shadow: var(--shadow); }
+  .thanks .qr { display: block; width: 100%; height: auto; }
+  .thanks .sub strong { color: var(--ink); font-weight: 600; white-space: nowrap; font-size: .9em; }
+  .thanks h1, .thanks .sub, .thanks .kicker { max-width: 52cqi; }
   .title .foot {
     position: absolute; bottom: 7cqi; left: 7cqi; display: flex; gap: 3cqi;
     font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 1.25cqi; color: var(--muted);
@@ -737,15 +741,17 @@
   </section>
 
   <!-- 20 · dzięki -->
-  <section class="slide title">
+  <section class="slide title thanks">
     <div class="kicker">Dzięki</div>
     <h1>Pytania?</h1>
-    <p class="sub">sylius/sylius-ai-dev-tools · sylius/sylius-mate-extension<br>symfony.com/doc/current/ai/components/mate.html<br>johanneswachter.dev/blog: mate-lab, the-hardest-code-to-delete</p>
+    <p class="sub">Slajdy, linki, komendy z demo:<br><strong>github.com/mpysiak/phpers-bydgoszcz-2026</strong></p>
+    <div class="qr-wrap"><svg xmlns="http://www.w3.org/2000/svg" class="qr" role="img" aria-label="QR: github.com/mpysiak/phpers-bydgoszcz-2026" viewBox="0 0 41 41" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h41v41H0z"/><path stroke="#000000" d="M4 4.5h7m2 0h1m3 0h1m1 0h1m1 0h1m1 0h1m2 0h2m2 0h7M4 5.5h1m5 0h1m1 0h1m1 0h1m1 0h1m1 0h2m2 0h2m1 0h1m1 0h2m1 0h1m5 0h1M4 6.5h1m1 0h3m1 0h1m2 0h1m3 0h2m1 0h3m1 0h1m1 0h1m3 0h1m1 0h3m1 0h1M4 7.5h1m1 0h3m1 0h1m2 0h1m3 0h2m1 0h6m1 0h2m1 0h1m1 0h3m1 0h1M4 8.5h1m1 0h3m1 0h1m1 0h3m3 0h1m1 0h3m1 0h1m3 0h1m1 0h1m1 0h3m1 0h1M4 9.5h1m5 0h1m4 0h3m1 0h3m1 0h2m2 0h2m1 0h1m5 0h1M4 10.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M14 11.5h2m1 0h1m1 0h1m1 0h3m1 0h1m1 0h2M4 12.5h1m1 0h1m1 0h1m1 0h1m5 0h2m2 0h2m3 0h3m4 0h1m2 0h1M5 13.5h1m2 0h1m3 0h2m1 0h1m1 0h1m2 0h3m1 0h2m2 0h4m3 0h2M4 14.5h2m1 0h1m2 0h2m1 0h1m4 0h1m1 0h1m1 0h1m3 0h1m1 0h2m1 0h1m2 0h1m1 0h1M4 15.5h1m1 0h2m6 0h1m2 0h3m1 0h4m2 0h1m2 0h1m1 0h1m3 0h1M4 16.5h8m2 0h1m1 0h1m1 0h1m1 0h1m1 0h3m2 0h4m2 0h1m2 0h1M4 17.5h2m1 0h2m3 0h2m2 0h9m5 0h1m3 0h1m1 0h1M4 18.5h1m4 0h2m3 0h12m2 0h2m1 0h1m1 0h4M4 19.5h5m2 0h1m1 0h1m1 0h2m1 0h1m1 0h3m1 0h2m4 0h1m4 0h1M5 20.5h2m2 0h2m3 0h4m1 0h1m1 0h1m1 0h3m1 0h4M4 21.5h2m2 0h2m1 0h1m2 0h1m1 0h3m1 0h1m3 0h1m3 0h4m4 0h1M4 22.5h1m3 0h3m3 0h2m1 0h2m2 0h1m3 0h2m1 0h1m1 0h1m3 0h3M8 23.5h1m5 0h1m3 0h1m1 0h1m3 0h2m1 0h2m1 0h3m2 0h2M4 24.5h1m3 0h3m1 0h1m1 0h3m1 0h2m3 0h1m1 0h1m3 0h2m2 0h1m2 0h1M5 25.5h3m1 0h1m1 0h3m1 0h1m3 0h1m3 0h1m1 0h1m2 0h1m1 0h1m2 0h1m1 0h2M4 26.5h1m2 0h1m2 0h2m2 0h3m5 0h1m2 0h2m2 0h2m1 0h1m2 0h2M5 27.5h1m1 0h1m1 0h1m2 0h3m1 0h2m1 0h1m1 0h3m1 0h2m3 0h1m4 0h1M4 28.5h1m1 0h3m1 0h7m3 0h2m2 0h2m2 0h6m1 0h1M12 29.5h1m1 0h1m1 0h3m2 0h1m3 0h1m2 0h1m3 0h2m2 0h1M4 30.5h7m2 0h2m2 0h2m3 0h1m3 0h3m1 0h1m1 0h1m1 0h3M4 31.5h1m5 0h1m2 0h1m1 0h1m5 0h5m2 0h1m3 0h1M4 32.5h1m1 0h3m1 0h1m1 0h1m1 0h2m1 0h4m1 0h3m1 0h1m1 0h6m1 0h2M4 33.5h1m1 0h3m1 0h1m2 0h5m1 0h6m7 0h5M4 34.5h1m1 0h3m1 0h1m1 0h2m2 0h5m1 0h4m6 0h3m1 0h1M4 35.5h1m5 0h1m3 0h2m1 0h2m1 0h3m1 0h7m1 0h1m2 0h1M4 36.5h7m1 0h2m1 0h2m2 0h3m1 0h3m1 0h2m3 0h1m2 0h2"/></svg>
+</div>
     <div class="foot">
       <span>Michał Pysiak</span>
-      <span class="todo" style="margin:0">TODO: QR + link do slajdów</span>
+      <span>Sylius</span>
     </div>
-    <div class="notes">Zostaje na ekranie na Q&amp;A.</div>
+    <div class="notes">Zostaje na ekranie na Q&amp;A. W repo: README z linkami (Mate docs, pack, extension, blog Johannesa, jego deck z Berlina), deck na GitHub Pages, komendy instalacji.</div>
   </section>
 
   <div class="brand" aria-label="Sylius">
