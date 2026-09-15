@@ -244,10 +244,10 @@
   .steps li.hot { background: var(--accent); color: var(--accent-ink); }
   .steps li.hot::before { color: var(--accent-ink); }
   .steps li .sub { display: block; font-size: 1.7cqi; color: var(--muted); margin-top: .3cqi; }
-  .steps.why-mcp { gap: .35cqi; }
-  .steps.why-mcp li { font-size: 1.85cqi; padding: .45cqi 1.3cqi; line-height: 1.3; }
+  .steps.why-mcp { gap: 1cqi; }
+  .steps.why-mcp li { font-size: 2cqi; padding: .6cqi 1.3cqi; line-height: 1.3; }
   .thesis .by.inline { display: inline; margin: 0 0 0 1cqi; white-space: nowrap; }
-  .steps.why-mcp li .sub { font-size: 1.45cqi; margin-top: .1cqi; }
+  .steps.why-mcp li .sub { font-size: 1.6cqi; margin-top: .15cqi; }
   .why-mcp + .thesis { margin-top: 1.4cqi; font-size: 2.1cqi; padding: 1cqi 1.6cqi; }
   .steps + .thesis { margin-top: 2cqi; font-size: 2.3cqi; padding: 1.2cqi 1.8cqi; }
   .steps li.hot .sub { color: var(--accent-ink); opacity: .85; }
@@ -687,15 +687,14 @@
   </section>
 
   <!-- 18 · a propos MCP -->
-  <section class="slide" data-steps="5">
+  <section class="slide">
     <div class="eyebrow">* A propos MCP</div>
     <h2 style="margin-bottom:1.4cqi">Dlaczego Mate <span class="q">usunął serwer MCP</span></h2>
     <ol class="steps why-mcp">
-      <li class="step" data-step="1"><span><strong>Decyduje widoczność, nie transport.</strong><span class="sub">Mate Lab: MCP 3/10, goły CLI 0/10, CLI + pliki 10/10.</span></span></li>
-      <li class="step" data-step="2"><span><strong>MCP był tylko transportem.</strong><span class="sub">Toole, schematy, runtime, skille, discovery: nic z tego go nie potrzebowało.</span></span></li>
-      <li class="step" data-step="3"><span><strong>Skilli przez MCP nikt nie czyta.</strong><span class="sub">Claude Code, Codex, Copilot: wszystkie z plików. Warstwa plikowa i tak musiała powstać.</span></span></li>
-      <li class="step" data-step="4"><span><strong>CLI + pliki są tańsze.</strong><span class="sub">Bez procesu, handshake'u i generowanego konfigu.</span></span></li>
-      <li class="step" data-step="5"><span><strong>Koszt: zgody per tool.</strong><span class="sub">Zamiast nich uprawnienia z shella. Adapter MCP może wrócić.</span></span></li>
+      <li><span><strong>Decyduje widoczność, nie transport.</strong><span class="sub">Mate Lab: MCP 3/10, goły CLI 0/10, CLI + pliki 10/10.</span></span></li>
+      <li><span><strong>MCP był tylko transportem.</strong><span class="sub">Toole, schematy, runtime, skille, discovery: nic z tego go nie potrzebowało.</span></span></li>
+      <li><span><strong>Skilli przez MCP nikt nie czyta.</strong><span class="sub">Claude Code, Codex, Copilot: wszystkie z plików. Warstwa plikowa i tak musiała powstać.</span></span></li>
+      <li><span><strong>CLI + pliki są tańsze.</strong><span class="sub">Bez procesu, handshake'u i generowanego konfigu.</span></span></li>
     </ol>
     <p class="thesis">„Kill the transport, <mark>not the capability.</mark>” <span class="by inline">Johannes Wachter · The hardest code to delete</span></p>
     <div class="notes">Wstęp jednym zdaniem: w Berlinie sam uzasadniał „Why MCP, Not Just a CLI?” (interactive context, jeden standard, per-tool zgody); pięć miesięcy później zmierzył i usunął. Cytat do mówienia: „ilość pracy włożonej w architekturę mówi zaskakująco mało o tym, czy powinna przetrwać kolejną”. Ostatnie zdanie: nawet transport tooli okazał się kwestią harnessu — teza z 17 raz jeszcze.</div>
