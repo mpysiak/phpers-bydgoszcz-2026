@@ -278,6 +278,10 @@
   }
   .term .hi { color: var(--term-hi); }
   .big-term { font-size: 2cqi; padding: 2.4cqi 2.8cqi; margin: 1cqi 0 2.4cqi; }
+  .install .term { font-size: 1.55cqi; padding: 1.4cqi 2cqi; margin-bottom: 1.4cqi; }
+  .install .term .ok { color: var(--ok); }
+  .install .lede { max-width: none; font-size: 2cqi; }
+  .install .lede strong { color: var(--ink); }
   .term .dim { opacity: .55; }
   .split { display: grid; grid-template-columns: 1.15fr 1fr; gap: 3.5cqi; flex: 1; min-height: 0; }
   .split.tools { grid-template-columns: 3fr 2fr; gap: 3cqi; }
@@ -497,15 +501,21 @@
     <div class="notes">Jak u Johannesa: outside-in. Reszta symfony/ai pozwala twojej aplikacji używać AI. Mate robi odwrotnie.</div>
   </section>
 
-  <!-- 10 · mate init -->
-  <section class="slide demo">
-    <div class="eyebrow">Demo · instalacja</div>
+  <!-- 9 · mate init -->
+  <section class="slide install">
+    <div class="eyebrow">Instalacja</div>
     <h2>Instalacja: <span class="q">trzy komendy</span></h2>
-    <div class="term big-term"><span class="dim">$</span> composer require --dev symfony/ai-mate symfony/ai-symfony-mate-extension
+    <div class="term"><span class="dim">$</span> composer require --dev symfony/ai-mate symfony/ai-symfony-mate-extension
 <span class="dim">$</span> vendor/bin/mate init
 <span class="dim">$</span> vendor/bin/mate tools:list</div>
-    <p class="lede">Pierwsza zrobiona przed talkiem. Dwie następne na żywo.</p>
-    <div class="notes">Zero sieci, sekundy. W terminalu pokazuję blok w AGENTS.md i skille w .agents/skills. Bez .mcp.json, ale o tym na końcu.</div>
+    <div class="term init-out"><span class="dim"># co zostawił init</span>
+<span class="ok">✓</span> mate/              config, extensions.php, AGENT_INSTRUCTIONS.md, src/
+<span class="ok">✓</span> composer.json      extra.ai-mate
+<span class="ok">✓</span> AGENTS.md          blok instrukcji dla agenta
+<span class="ok">✓</span> CLAUDE.md          @AGENTS.md
+<span class="ok">✓</span> .agents/skills/    <span class="hi">5 skilli</span>: profiler-debugging, request-triage, service-inspection, …</div>
+    <p class="lede">Zero sieci, sekundy. Agent dostaje instrukcje i skille w plikach. <strong>Między nagraniem 1 a 2 zmieniło się tylko to.</strong></p>
+    <div class="notes">Bez .mcp.json, ale o tym na końcu. Fakty: interaktywny init robi też discover (skille); z --no-interaction skille instaluje dopiero `mate discover`. init ostrzega o brakującym .gitignore w paczce — kosmetyka.</div>
   </section>
 
   <!-- 11 · demo przebieg 2 -->
