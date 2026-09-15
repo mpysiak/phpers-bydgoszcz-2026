@@ -482,7 +482,7 @@
       </div>
       <div class="gain">
         <h3>Rozszerzalny</h3>
-        <p class="ex">własne toole (klasa z atrybutem) i własne skille; rozszerzenia jako zwykłe paczki Composera</p>
+        <p class="ex">własne toole i skille prosto w projekcie; do dzielenia między projektami: extension = zwykła paczka Composera</p>
       </div>
       <div class="gain">
         <h3>Z każdym agentem</h3>
@@ -564,8 +564,8 @@
         <p class="ex">metoda z <code>#[MateTool(name, description)]</code> w <code>mate/src/</code>, DI działa; <code>init</code> już dodał scan-dir</p>
       </div>
       <div class="gain">
-        <h3>Własny skill</h3>
-        <p class="ex">katalog w extensionie, ląduje w <code>.agents/skills/mate-*</code>. To, co widzieliście po <code>mate init</code>, tylko wasze</p>
+        <h3>Własny skill bez extensiona</h3>
+        <p class="ex">katalog w <code>mate/skills</code> + wpis w composer.json; <code>mate discover</code> instaluje go do <code>.agents/skills/mate-*</code> jak te z paczek. Extension dopiero, gdy ma jechać do wielu projektów</p>
       </div>
     </div>
     <div class="notes">Teraz, gdy sala widziała efekt: jak to rozszerzyć. INSTRUCTIONS.md mówi agentowi kiedy.</div>
@@ -729,8 +729,8 @@
         <p class="ex">kontener ze zrzutu, profiler i logi z dysku. Odpowiada, gdy najbardziej go potrzebujesz</p>
       </div>
       <div class="gain">
-        <h3>Własny tool: jedna metoda</h3>
-        <p class="ex"><code>#[MateTool]</code> w <code>mate/src</code>, DI działa, bez extensiona</p>
+        <h3>Własny tool i skill bez extensiona</h3>
+        <p class="ex">tool = metoda z <code>#[MateTool]</code> w <code>mate/src</code>, skill = katalog w <code>mate/skills</code></p>
       </div>
     </div>
     <div class="notes">Odpowiedź na „a co ja z tego mam, skoro nie robię w Syliusie ani w Symfony". Dwa punkty powtarzają 8–9 celowo, tu w roli „u ciebie też". Zespół: jeden composer require w projekcie i każdy dev, każdy agent ma to samo — koniec z CLAUDE.md, które każdy pisze po swojemu.</div>
