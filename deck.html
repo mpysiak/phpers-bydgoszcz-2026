@@ -664,39 +664,6 @@
     <div class="notes">Skill skurczony do osądu. Skille wersjonowane razem z toolami, w jednej paczce — upstream (Mate 0.13) doszedł do tego samego. Pięć przygaszonych to skille z rdzenia Mate i bridge'a Symfony, te same, które sala widziała w demo.</div>
   </section>
 
-  <!-- 17 · plusy Mate w twoim projekcie -->
-  <section class="slide">
-    <div class="eyebrow">Twój projekt · niekoniecznie Symfony</div>
-    <h2 style="margin-bottom:1.6cqi">Co daje Mate <span class="q">w twoim projekcie</span></h2>
-    <div class="cols cols-2x3 what pros">
-      <div class="gain">
-        <h3>Dowolna aplikacja PHP</h3>
-        <p class="ex">rdzeń nie zna frameworka, Symfony to jeden z bridge'ów. Legacy też</p>
-      </div>
-      <div class="gain">
-        <h3>Cały zespół dostaje to samo</h3>
-        <p class="ex"><code>composer install</code> daje każdemu devowi i każdemu agentowi te same toole i skille: Claude Code, Codex, Copilot, Cursor</p>
-      </div>
-      <div class="gain">
-        <h3>Zero ingerencji w aplikację</h3>
-        <p class="ex">dev dependency z własnym kontenerem. Nic w kernelu, nic na produkcji</p>
-      </div>
-      <div class="gain">
-        <h3>Jedno źródło prawdy</h3>
-        <p class="ex">toole i instrukcje w vendorze, wersjonowane z kodem. Nie w CLAUDE.md per osoba</p>
-      </div>
-      <div class="gain">
-        <h3>Działa, gdy apka nie bootuje</h3>
-        <p class="ex">kontener ze zrzutu, profiler i logi z dysku. Odpowiada, gdy najbardziej go potrzebujesz</p>
-      </div>
-      <div class="gain">
-        <h3>Własny tool: jedna metoda</h3>
-        <p class="ex"><code>#[MateTool]</code> w <code>mate/src</code>, DI działa, bez extensiona</p>
-      </div>
-    </div>
-    <div class="notes">Odpowiedź na „a co ja z tego mam, skoro nie robię w Syliusie ani w Symfony". Dwa punkty powtarzają 8–9 celowo, tu w roli „u ciebie też". Zespół: jeden composer require w projekcie i każdy dev, każdy agent ma to samo — koniec z CLAUDE.md, które każdy pisze po swojemu.</div>
-  </section>
-
   <!-- 18 · takeaway + klamra -->
   <section class="slide">
     <div class="eyebrow">Your project</div>
@@ -734,6 +701,39 @@
     </ol>
     <p class="thesis">„Kill the transport, <mark>not the capability.</mark>” <span class="by inline">Johannes Wachter · The hardest code to delete</span></p>
     <div class="notes">Wstęp jednym zdaniem: w Berlinie sam uzasadniał „Why MCP, Not Just a CLI?” (interactive context, jeden standard, per-tool zgody); pięć miesięcy później zmierzył i usunął. Cytat do mówienia: „ilość pracy włożonej w architekturę mówi zaskakująco mało o tym, czy powinna przetrwać kolejną”. Ostatnie zdanie: nawet transport tooli okazał się kwestią harnessu — teza z 17 raz jeszcze.</div>
+  </section>
+
+  <!-- 19 · plusy Mate w twoim projekcie -->
+  <section class="slide">
+    <div class="eyebrow">Twój projekt · niekoniecznie Symfony</div>
+    <h2 style="margin-bottom:1.6cqi">Co daje Mate <span class="q">w twoim projekcie</span></h2>
+    <div class="cols cols-2x3 what pros">
+      <div class="gain">
+        <h3>Dowolna aplikacja PHP</h3>
+        <p class="ex">rdzeń nie zna frameworka, Symfony to jeden z bridge'ów. Legacy też</p>
+      </div>
+      <div class="gain">
+        <h3>Cały zespół dostaje to samo</h3>
+        <p class="ex"><code>composer install</code> daje każdemu devowi i każdemu agentowi te same toole i skille: Claude Code, Codex, Copilot, Cursor</p>
+      </div>
+      <div class="gain">
+        <h3>Zero ingerencji w aplikację</h3>
+        <p class="ex">dev dependency z własnym kontenerem. Nic w kernelu, nic na produkcji</p>
+      </div>
+      <div class="gain">
+        <h3>Jedno źródło prawdy</h3>
+        <p class="ex">toole i instrukcje w vendorze, wersjonowane z kodem. Nie w CLAUDE.md per osoba</p>
+      </div>
+      <div class="gain">
+        <h3>Działa, gdy apka nie bootuje</h3>
+        <p class="ex">kontener ze zrzutu, profiler i logi z dysku. Odpowiada, gdy najbardziej go potrzebujesz</p>
+      </div>
+      <div class="gain">
+        <h3>Własny tool: jedna metoda</h3>
+        <p class="ex"><code>#[MateTool]</code> w <code>mate/src</code>, DI działa, bez extensiona</p>
+      </div>
+    </div>
+    <div class="notes">Odpowiedź na „a co ja z tego mam, skoro nie robię w Syliusie ani w Symfony". Dwa punkty powtarzają 8–9 celowo, tu w roli „u ciebie też". Zespół: jeden composer require w projekcie i każdy dev, każdy agent ma to samo — koniec z CLAUDE.md, które każdy pisze po swojemu.</div>
   </section>
 
   <!-- 20 · dzięki -->
