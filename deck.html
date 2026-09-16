@@ -327,8 +327,21 @@
   .runs tr.hot td { background: var(--accent); color: var(--accent-ink); }
   .runs tr.hot td:first-child { color: var(--accent-ink); }
   .bonus .thesis { margin-top: auto; }
+  .bonus.playing .runs, .bonus.playing .thesis, .bonus.playing h2 { display: none; }
+  .bonus-player { position: absolute; inset: 5cqi 3cqi 1.6cqi; }
+  .bonus-player video { width: 100%; height: 100%; object-fit: contain; border-radius: .6cqi; background: #000; display: block; }
+  .bonus-player .close { position: absolute; top: .8cqi; right: .8cqi; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 1.2cqi; background: var(--mark); color: var(--mark-ink); padding: .4cqi .9cqi; border-radius: .4cqi; cursor: pointer; }
   .bonus .vlink { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent); padding-bottom: .1em; }
   .bonus .vlink:hover { background: var(--accent); color: var(--accent-ink); }
+
+  /* ---- own tool / skill ---- */
+  .own { display: grid; grid-template-columns: 1.15fr 1fr; gap: 2.4cqi; flex: 1; min-height: 0; align-items: start; }
+  .own > div { min-width: 0; }
+  .own .tag { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 1.1cqi; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: .7cqi; }
+  .own .term.code { font-size: 1.25cqi; line-height: 1.42; padding: 1.1cqi 1.4cqi; overflow: hidden; }
+  .own .cap { font-size: 1.35cqi; color: var(--muted); margin-top: .6cqi; }
+  .own .cap strong { color: var(--ink); }
+  .own + .thesis { margin-top: 1cqi; font-size: 2cqi; padding: .9cqi 1.5cqi; }
 
   /* ---- video ---- */
   .slide.video { padding: 4.9cqi 3cqi 1.6cqi; }
@@ -624,25 +637,43 @@
     <div class="notes">Tury i czas widzieliście w nagraniach. Goły przebieg szedł na Fable 5.1, najmocniejszym dostępnym modelu, i tak 5 minut — nagranie przyspieszone ×5 (nakładka na wideo). Z Mate: 1:20 do tego samego wniosku, pierwszy ruch = skill profilera + tool. TOKENY (z transkryptów, po jednym przebiegu na wariant, Fable 5.1): goły 30 tur / 12 wywołań narzędzi / 76 k nowego wejścia + 1,38 M z cache / 38 k wyjścia; z Mate 12 tur / 6 wywołań / 43 k + 0,51 M / 6 k wyjścia. Czyli ~2,6× mniej wejścia, 6× mniej wyjścia, kosztowo ~3× taniej (cache ~10× tańszy, wyjście ~5× droższe). Zastrzeżenie: ilustracja, nie statystyka; sesja z Mate liczy też pisanie podsumowania, więc różnica raczej zaniżona. HAIKU: na razie nie wspominać (nagranie 3 = Haiku + Mate, też 1:20, skille i toole użyte — w rezerwie, gdyby padło pytanie o słabszy model). Q&A „a pamięć / cache?”: każdy przebieg = nowa sesja, auto-memory projektu pusta (sprawdzone), jedyne wspólne źródło to git projektu (`git show` ostatniego commita w obu przebiegach).</div>
   </section>
 
-  <!-- 14 · extensions -->
+  <!-- 14 · własny tool, własny skill -->
   <section class="slide">
     <div class="eyebrow">Jak to rozszerzyć</div>
-    <h2>Extensions, <span class="q">własne toole, własne skille</span></h2>
-    <div class="cols cols-3 what">
-      <div class="gain">
-        <h3>Extension = paczka Composera</h3>
-        <p class="ex"><code>extra.ai-mate</code>: scan-dirs, instructions, skills; wykrywana przy instalacji. Symfony, Monolog, społeczność, Sylius</p>
+    <h2 style="margin-bottom:1.4cqi">Własny tool, <span class="q">własny skill</span></h2>
+    <div class="own">
+      <div>
+        <div class="tag">1 · Tool = metoda z atrybutem</div>
+        <div class="term code"><span class="dim">// mate/src/FeatureFlags.php</span>
+final class FeatureFlags
+{
+    <span class="hi">#[MateTool(</span>
+        name: 'app_feature_flags',
+        description: 'Flagi i ich stan w tym env',
+    <span class="hi">)]</span>
+    public function __invoke(string $env = 'dev'): array
+    {
+        return Yaml::parseFile("config/flags/$env.yaml");
+    }
+}</div>
+        <p class="cap"><code>mate/src</code> jest już scan-direm po <code>init</code>. Typy parametrów = schema toola. <code>mate discover</code> i agent go widzi.</p>
       </div>
-      <div class="gain">
-        <h3>Własny tool bez extensiona</h3>
-        <p class="ex">metoda z <code>#[MateTool(name, description)]</code> w <code>mate/src/</code>, DI działa; <code>init</code> już dodał scan-dir</p>
-      </div>
-      <div class="gain">
-        <h3>Własny skill bez extensiona</h3>
-        <p class="ex">katalog w <code>mate/skills</code> + wpis w composer.json; <code>mate discover</code> instaluje go do <code>.agents/skills/mate-*</code> jak te z paczek. Extension dopiero, gdy ma jechać do wielu projektów</p>
+      <div>
+        <div class="tag">2 · Skill = katalog z SKILL.md</div>
+        <div class="term code"><span class="dim">// mate/skills/app-flags/SKILL.md</span>
+---
+name: app-flags
+description: Use when a task touches
+  feature flags. Call app_feature_flags
+  first, never read config by hand.
+---
+- Flags: config/flags/&lt;env&gt;.yaml
+- Ask the tool, do not guess names</div>
+        <p class="cap"><code>extra.ai-mate.skills: ["mate/skills"]</code> w composer.json. Skill mówi <strong>kiedy</strong>, tool mówi <strong>jak jest</strong>.</p>
       </div>
     </div>
-    <div class="notes">Teraz, gdy sala widziała efekt: jak to rozszerzyć. INSTRUCTIONS.md mówi agentowi kiedy.</div>
+    <p class="thesis">Tool działa też w innych projektach? <mark>Zrób z niego Mate extension.</mark><span class="by">zwykła paczka Composera z extra.ai-mate · start: github.com/MatesOfMate/extension-template</span></p>
+    <div class="notes">Po demo: jak to rozszerzyć u siebie. Tool: jedna metoda z #[MateTool], DI działa (własny kontener Mate). Skill: katalog + wpis w composer.json, ląduje w .agents/skills/mate-app-flags tak jak te z paczek. Extension dopiero, gdy tool i skill mają jechać do wielu projektów — wtedy paczka z extra.ai-mate (scan-dirs, instructions, skills), start z extension-template.</div>
   </section>
 
   <!-- 15 · synergia -->
@@ -847,7 +878,8 @@
         <tr class="hot"><td>3</td><td>Haiku 4.5</td><td>z Mate</td><td>1:20</td></tr>
       </tbody>
     </table>
-    <p class="thesis">Ile płacicie za model, <mark>a ile za otoczenie?</mark><span class="by">ten sam prompt, ten sam projekt, po jednym przebiegu · <a class="vlink" href="media/demo-3-haiku-mate.webm" target="_blank" rel="noopener">▶ nagranie 3: Haiku + Mate (1:23)</a></span></p>
+    <p class="thesis">Ile płacicie za model, <mark>a ile za otoczenie?</mark><span class="by">ten sam prompt, ten sam projekt, po jednym przebiegu · <a class="vlink" href="#" id="bonus-toggle">▶ nagranie 3: Haiku + Mate (1:23)</a></span></p>
+    <div class="bonus-player" id="bonus-player" hidden><span class="close" id="bonus-close">✕ zamknij (Esc)</span><video id="bonus-video" src="media/demo-3-haiku-mate.webm" preload="metadata" playsinline controls></video></div>
     <div class="notes">Pokazywać tylko, gdy na #21 zegar < 28:00. Haiku z Mate: te same skille i toole, 71 tur i 34 wywołania (mieli drobniej niż Fable: 12 tur, 6 wywołań), ale dochodzi w tym samym czasie tam, gdzie Fable bez Mate potrzebował 5 minut. Jeden przebieg na wariant = ilustracja, nie statystyka. Mate Lab Johannesa też był na Haiku.</div>
   </section>
 
@@ -890,9 +922,11 @@
       var active = k === idx;
       s.classList.toggle('is-active', active);
       Array.prototype.forEach.call(s.querySelectorAll('video'), function (v) {
-        if (active) { v.currentTime = 0; var p = v.play(); if (p && p.catch) p.catch(function () {}); }
-        else { v.pause(); v.currentTime = 0; }
+        var auto = s.classList.contains('video');
+        if (active && auto) { v.currentTime = 0; var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+        else if (!active) { v.pause(); v.currentTime = 0; }
       });
+      if (!active && s.classList.contains('bonus')) { closeBonus(); }
     });
     var nodes = slides[idx].querySelectorAll('.step');
     Array.prototype.forEach.call(nodes, function (n) {
@@ -903,6 +937,18 @@
     progress.style.width = ((idx + 1) / slides.length * 100) + '%';
     if (location.hash !== '#' + (idx + 1)) history.replaceState(null, '', '#' + (idx + 1));
   }
+  function closeBonus() {
+    var sec = document.querySelector('.slide.bonus'); if (!sec) return;
+    var pl = document.getElementById('bonus-player'), v = document.getElementById('bonus-video');
+    sec.classList.remove('playing'); pl.hidden = true; v.pause();
+  }
+  function openBonus() {
+    var sec = document.querySelector('.slide.bonus'); if (!sec) return;
+    var pl = document.getElementById('bonus-player'), v = document.getElementById('bonus-video');
+    sec.classList.add('playing'); pl.hidden = false; v.currentTime = 0; var p = v.play(); if (p && p.catch) p.catch(function () {});
+  }
+  var bt = document.getElementById('bonus-toggle'); if (bt) bt.addEventListener('click', function (e) { e.preventDefault(); openBonus(); });
+  var bc = document.getElementById('bonus-close'); if (bc) bc.addEventListener('click', function (e) { e.stopPropagation(); closeBonus(); });
   function go(i, fromRight) {
     idx = Math.min(Math.max(i, 0), slides.length - 1);
     var max = stepsOf(idx);
@@ -912,7 +958,7 @@
   function next() { var max = stepsOf(idx); if (max && step < max) { step++; paint(); } else { go(idx + 1, false); } }
   function prev() { var max = stepsOf(idx); if (max && step > 1) { step--; paint(); } else { go(idx - 1, true); } }
   document.getElementById('stage').addEventListener('click', function (e) {
-    if (e.target.closest('a')) return;
+    if (e.target.closest('a') || e.target.closest('.bonus-player')) return;
     var r = e.currentTarget.getBoundingClientRect();
     (e.clientX - r.left < r.width * 0.25) ? prev() : next();
   });
@@ -931,6 +977,7 @@
         break;
       case 'ArrowRight': case 'ArrowDown': case 'PageDown': e.preventDefault(); next(); break;
       case 'ArrowLeft': case 'ArrowUp': case 'PageUp': e.preventDefault(); prev(); break;
+      case 'Escape': closeBonus(); break;
       case 'Home': e.preventDefault(); go(0, false); break;
       case 'End': e.preventDefault(); go(slides.length - 1, false); break;
       case 'n': case 'N': document.body.classList.toggle('notes-on'); break;
