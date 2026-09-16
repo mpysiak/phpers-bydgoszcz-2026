@@ -449,10 +449,10 @@
   <section class="slide video">
     <div class="eyebrow">Demo · przebieg 1 · goły agent, bez Mate</div>
     <div class="vid-wrap">
-      <video class="vid" src="media/demo-1-bare.webm" preload="auto" playsinline></video>
+      <video class="vid" src="media/demo-1-bare.webm" preload="auto" playsinline controls></video>
       <span class="badge">nagranie ×5</span>
     </div>
-    <div class="notes">Autoplay po wejściu na slajd; spacja = pauza/play, strzałka = dalej. Goły agent, ten sam prompt. 5 minut przyspieszone do minuty. Kończy się na zdaniu o N+1.</div>
+    <div class="notes">Autoplay po wejściu na slajd; spacja/k = pauza/play, j/l = −10 s/+10 s, pasek na dole = przewijanie myszą, strzałka = dalej. Goły agent, ten sam prompt. 5 minut przyspieszone do minuty. Kończy się na zdaniu o N+1.</div>
   </section>
 
 
@@ -565,9 +565,9 @@
   <section class="slide video">
     <div class="eyebrow">Demo · przebieg 2 · ten sam prompt, nowa sesja, z Mate</div>
     <div class="vid-wrap">
-      <video class="vid" src="media/demo-2-mate.webm" preload="auto" playsinline></video>
+      <video class="vid" src="media/demo-2-mate.webm" preload="auto" playsinline controls></video>
     </div>
-    <div class="notes">Autoplay po wejściu; spacja = pauza/play. Nowa sesja po mate init. Pierwsza linijka: „Sprawdzę tę stronę profilerem Symfony przez Mate". 1:20 do zdania o N+1, w czasie rzeczywistym.</div>
+    <div class="notes">Autoplay po wejściu; spacja/k = pauza/play, j/l = −10 s/+10 s, pasek = przewijanie. Nowa sesja po mate init. Pierwsza linijka: „Sprawdzę tę stronę profilerem Symfony przez Mate". 1:20 do zdania o N+1, w czasie rzeczywistym.</div>
   </section>
 
   <!-- 12 · co dostał agent -->
@@ -860,11 +860,16 @@
   });
   document.addEventListener('keydown', function (e) {
     if (e.metaKey || e.ctrlKey || e.altKey) return;
+    if (e.target && e.target.tagName === 'VIDEO') { e.target.blur(); }
     switch (e.key) {
-      case ' ':
-        e.preventDefault();
+      case ' ': case 'k': case 'K':
         var vid = slides[idx].querySelector('video');
-        if (vid) { vid.paused ? vid.play() : vid.pause(); } else { next(); }
+        if (vid) { e.preventDefault(); vid.paused ? vid.play() : vid.pause(); }
+        else if (e.key === ' ') { e.preventDefault(); next(); }
+        break;
+      case 'j': case 'J': case 'l': case 'L':
+        var v2 = slides[idx].querySelector('video');
+        if (v2) { e.preventDefault(); v2.currentTime = Math.max(0, v2.currentTime + (e.key.toLowerCase() === 'l' ? 10 : -10)); }
         break;
       case 'ArrowRight': case 'ArrowDown': case 'PageDown': e.preventDefault(); next(); break;
       case 'ArrowLeft': case 'ArrowUp': case 'PageUp': e.preventDefault(); prev(); break;
