@@ -438,7 +438,7 @@
         <li><strong>Sylius Standard 2.2</strong>, domyślne fixturki. Lista produktów <em>T-shirts › Men</em>: 9 produktów × 5 wariantów</li>
         <li><strong>Ticket:</strong> pod nazwą produktu pokaż „5 variants · S, M, L, XL, XXL · 28 in stock”</li>
         <li><strong>Zrobione po syliusowemu:</strong> twig hook + szablon, zero PHP. Szablon iteruje po wariantach i ich opcjach</li>
-        <li><strong>Efekt:</strong> 71 → <mark>111 zapytań</mark>, 45× ten sam <code>SELECT</code></li>
+        <li><strong>Efekt:</strong> <mark>45× ten sam SELECT</mark> na jednej stronie, łącznie 111 zapytań</li>
       </ul>
       <div class="shots">
         <img class="shot" src="media/example-listing.png" alt="Lista produktów T-shirts / Men z linią wariantów pod nazwą i toolbarem profilera">
@@ -446,7 +446,7 @@
         <p class="cap">Toolbar profilera: <strong>111 zapytań</strong>, na żółto. Sam profiler to widzi. Pytanie, czy agent go zapyta.</p>
       </div>
     </div>
-    <div class="notes">Kontekst przed nagraniem 1. Customizacja jest poprawna w sensie konwencji (hook, nie override), błąd siedzi w ścieżce danych: pętla w szablonie po relacji = klasyczne N+1. Czysty listing robi 71 zapytań (Sylius sam robi ×9 per produkt), z customizacją 111, z czego 45 to ten sam SELECT po option values. Oba nagrania dostają tę samą stronę i ten sam prompt.</div>
+    <div class="notes">Kontekst przed nagraniem 1. Customizacja jest poprawna w sensie konwencji (hook, nie override), błąd siedzi w ścieżce danych: pętla w szablonie po relacji = klasyczne N+1. Z customizacją 111 zapytań, z czego 45 to ten sam SELECT po option values. Bazę (71 na czystym listingu) NIE podawać ze sceny — jeśli ktoś zapyta: „część to Sylius sam, ale nasze 40 to jeden szablon". Oba nagrania dostają tę samą stronę i ten sam prompt.</div>
   </section>
 
   <!-- 5 · demo przebieg 1 -->
