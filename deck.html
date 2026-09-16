@@ -245,6 +245,9 @@
   .clock.hot .tag, .clock.hot .score { color: var(--accent-ink); opacity: .85; }
   .clock.hot code { background: rgba(255,255,255,.18); color: inherit; }
   .rules { display: grid; grid-template-columns: 1fr 1fr; gap: 1cqi 3cqi; font-size: 2.1cqi; }
+  .clocks.eco .clock h3 { font-size: 2.2cqi; }
+  .clocks.eco .clock p { font-size: 1.7cqi; }
+  .clocks.eco + .thesis { margin-top: auto; }
   @media (prefers-reduced-motion: reduce) { .clock { transition: none; } }
 
   /* ---- numbered conclusions ---- */
@@ -793,6 +796,31 @@
       </div>
     </div>
     <div class="notes">Odpowiedź na „a co ja z tego mam, skoro nie robię w Syliusie ani w Symfony". Dwa punkty powtarzają 8–9 celowo, tu w roli „u ciebie też". Zespół: jeden composer require w projekcie i każdy dev, każdy agent ma to samo — koniec z CLAUDE.md, które każdy pisze po swojemu.</div>
+  </section>
+
+  <!-- 21 · community -->
+  <section class="slide">
+    <div class="eyebrow">Ekosystem · rozszerzenia do Mate</div>
+    <h2>Community</h2>
+    <div class="clocks eco">
+      <div class="clock">
+        <div class="tag">Oficjalne · symfony/ai</div>
+        <h3>Symfony · Monolog</h3>
+        <p>bridge Symfony (kontener, profiler) i Monolog (logi). Profiler w nagraniu 2 to właśnie bridge Symfony.</p>
+      </div>
+      <div class="clock">
+        <div class="tag">MatesOfMate</div>
+        <h3>PHPStan · PHPUnit · Composer · Rector</h3>
+        <p>plus self-review, szablon extensiona i lista <code>awesome-mate</code>.</p>
+      </div>
+      <div class="clock">
+        <div class="tag">Frameworki i produkty</div>
+        <h3>Sylius · Sulu · OroCommerce</h3>
+        <p>ten sam wzorzec: paczka Composera z toolami i skillami nad własną domeną.</p>
+      </div>
+    </div>
+    <p class="thesis">Zbieramy je w jednym miejscu: <mark>github.com/MatesOfMate</mark><span class="by">awesome-mate = aktualna lista rozszerzeń · extension-template = start własnego</span></p>
+    <div class="notes">Oficjalne bridge'e w monorepo symfony/ai. MatesOfMate to organizacja community (PHPStan, PHPUnit, Composer, Rector, self-review, extension-template, awesome-mate) — tagi 0.6.0 pod Mate 0.12; wersja pod 0.13 w drodze. Ekosystem: Sylius (nasze), Sulu (Johannes), OroCommerce (community), Softspring CMS. Jeśli robisz swój: zacznij od extension-template.</div>
   </section>
 
   <!-- 20 · dzięki -->
