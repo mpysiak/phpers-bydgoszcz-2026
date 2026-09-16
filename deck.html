@@ -318,6 +318,16 @@
   .shots .cap { font-size: 1.45cqi; color: var(--muted); }
   .shots .cap strong { color: var(--ink); }
 
+  /* ---- bonus table ---- */
+  .runs { border-collapse: collapse; width: 100%; font-size: 2.2cqi; margin-top: 1cqi; }
+  .runs th { font-family: "JetBrains Mono", ui-monospace, monospace; font-weight: 500; font-size: 1.15cqi; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); text-align: left; padding: .6cqi 1.4cqi; border-bottom: 1px solid var(--line); }
+  .runs td { padding: 1.1cqi 1.4cqi; border-bottom: 1px solid var(--line); }
+  .runs td:first-child { font-family: "JetBrains Mono", ui-monospace, monospace; color: var(--accent); font-size: 1.6cqi; width: 4cqi; }
+  .runs td:last-child { font-family: "Bricolage Grotesque", "Instrument Sans", Arial, sans-serif; font-weight: 700; }
+  .runs tr.hot td { background: var(--accent); color: var(--accent-ink); }
+  .runs tr.hot td:first-child { color: var(--accent-ink); }
+  .bonus .thesis { margin-top: auto; }
+
   /* ---- video ---- */
   .slide.video { padding: 4.9cqi 3cqi 1.6cqi; }
   .stage.on-video .counter, .stage.on-video .brand, .stage.on-video .progress { opacity: 0; }
@@ -821,6 +831,22 @@
     </div>
     <p class="thesis"><span class="muted">Lista:</span> <mark>github.com/MatesOfMate/awesome-mate</mark><br><span class="muted">Start własnego:</span> <mark>github.com/MatesOfMate/extension-template</mark></p>
     <div class="notes">Oficjalne bridge'e w monorepo symfony/ai. MatesOfMate to organizacja community (PHPStan, PHPUnit, Composer, Rector, self-review, extension-template, awesome-mate) — tagi 0.6.0 pod Mate 0.12; wersja pod 0.13 w drodze. Ekosystem: Sylius (nasze), Sulu (Johannes), OroCommerce (community), Softspring CMS. Jeśli robisz swój: zacznij od extension-template.</div>
+  </section>
+
+  <!-- 22 · bonus: słabszy model -->
+  <section class="slide bonus">
+    <div class="eyebrow">Bonus · jeśli zostało parę minut</div>
+    <h2>A gdyby wziąć <span class="q">słabszy model?</span></h2>
+    <table class="runs">
+      <thead><tr><th></th><th>model</th><th>otoczenie</th><th>do „to N+1”</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Fable 5.1</td><td>bez Mate</td><td>~5 min</td></tr>
+        <tr><td>2</td><td>Fable 5.1</td><td>z Mate</td><td>1:20</td></tr>
+        <tr class="hot"><td>3</td><td>Haiku 4.5</td><td>z Mate</td><td>1:20</td></tr>
+      </tbody>
+    </table>
+    <p class="thesis">Ile płacicie za model, <mark>a ile za otoczenie?</mark><span class="by">ten sam prompt, ten sam projekt, po jednym przebiegu · nagranie 3 w repo: media/demo-3-haiku-mate.webm</span></p>
+    <div class="notes">Pokazywać tylko, gdy na #21 zegar < 28:00. Haiku z Mate: te same skille i toole, 71 tur i 34 wywołania (mieli drobniej niż Fable: 12 tur, 6 wywołań), ale dochodzi w tym samym czasie tam, gdzie Fable bez Mate potrzebował 5 minut. Jeden przebieg na wariant = ilustracja, nie statystyka. Mate Lab Johannesa też był na Haiku.</div>
   </section>
 
   <!-- 20 · dzięki -->
