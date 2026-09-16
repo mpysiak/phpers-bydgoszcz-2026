@@ -420,10 +420,35 @@
     <div class="notes">Autoplay po wejściu na slajd; spacja = pauza/play, strzałka = dalej. Goły agent, ten sam prompt. 5 minut przyspieszone do minuty. Kończy się na zdaniu o N+1.</div>
   </section>
 
-  <!-- 6 · piramida -->
+
+  <!-- 6 · wynik przebiegu 1 -->
+  <section class="slide">
+    <div class="eyebrow">Demo · przebieg 1 · wynik</div>
+    <h2>Ogarnie. <span class="q">W końcu.</span></h2>
+    <div class="isnot">
+      <div class="is">
+        <h3>Co widzieliśmy</h3>
+        <ul>
+          <li>czyta kontrolery, encje, szablony, konfig Doctrine</li>
+          <li>on <strong>wie</strong>, że profiler istnieje, i dobiera się do niego ręcznie</li>
+          <li>kilka tur łopatologii, zanim zobaczy zapytania</li>
+        </ul>
+      </div>
+      <div class="is">
+        <h3>Co to znaczy</h3>
+        <ul>
+          <li>wiedza jest, brakuje ścieżki</li>
+          <li>w małym projekcie trafi, w dużym ta sama metoda kosztuje więcej</li>
+        </ul>
+      </div>
+    </div>
+    <p class="thesis">Bez toola ogarnie. Pytanie: <mark>za ile</mark>?</p>
+    <div class="notes">Zaraz po nagraniu. Model zna Symfony, próbował curl na /_profiler, czytać pliki z var/cache — wiedza była, brakowało ścieżki.</div>
+  </section>
+  <!-- 7 · piramida -->
   <section class="slide" data-steps="4">
-    <div class="eyebrow">Harness · wg Dave'a Liddamenta</div>
-    <h2>Co nie zgaduje, <span class="q">to wie</span></h2>
+    <div class="eyebrow">Skąd te 5 minut · piramida Dave'a Liddamenta</div>
+    <h2>Czego model nie wie, <span class="q">to zgaduje</span></h2>
     <div class="pyr-wrap">
       <div class="axis">
         <span>człowiek</span>
@@ -450,37 +475,12 @@
         </g>
       </svg>
       <div class="pyr-side">
-        <p><strong>Mate żyje na dole.</strong> Profiler, kontener, logi: rzeczy, które nie zgadują, tylko wiedzą.</p>
+        <p><strong>Odpowiedź żyła na dole.</strong> Profiler, kontener, logi: rzeczy, które nie zgadują, tylko wiedzą. Agent spędził 5 minut piętro wyżej, wnioskując z kodu.</p>
         <p class="muted">Dół egzekwuje kod. Środek model. Góra człowiek.</p>
       </div>
     </div>
     <p class="thesis">Wszystko wyżej działa tylko dlatego, że <mark>podstawa jest solidna</mark>.</p>
-    <div class="notes">Mówione, gdy agent pracuje. Piramida Liddamenta z SymfonyLive Berlin, Johannes dopisał do podstawy Mate. Podświetlam od dołu: kod, model, człowiek.</div>
-  </section>
-
-  <!-- 8 · wynik przebiegu 1 -->
-  <section class="slide">
-    <div class="eyebrow">Demo · przebieg 1 · wynik</div>
-    <h2>Ogarnie. <span class="q">W końcu.</span></h2>
-    <div class="isnot">
-      <div class="is">
-        <h3>Co widzieliśmy</h3>
-        <ul>
-          <li>czyta kontrolery, encje, szablony, konfig Doctrine</li>
-          <li>on <strong>wie</strong>, że profiler istnieje, i dobiera się do niego ręcznie</li>
-          <li>kilka tur łopatologii, zanim zobaczy zapytania</li>
-        </ul>
-      </div>
-      <div class="is">
-        <h3>Co to znaczy</h3>
-        <ul>
-          <li>wiedza jest, brakuje ścieżki</li>
-          <li>w małym projekcie trafi, w dużym ta sama metoda kosztuje więcej</li>
-        </ul>
-      </div>
-    </div>
-    <p class="thesis">Bez toola ogarnie. Pytanie: <mark>za ile</mark>?</p>
-    <div class="notes">Pokazuję terminal: licznik tur i plików, zegar. Model zna Symfony, próbuje curl na /_profiler, czytać pliki z var/cache.</div>
+    <div class="notes">Diagnoza 5 minut z nagrania. Piramida Liddamenta z SymfonyLive Berlin, Johannes dopisał do podstawy profiler i kontener. Podświetlam od dołu: kod, model, człowiek. Jedno przejście, bez rozwijania pięter — to już nie wypełniacz. Przejście do 8: „Mate to jest właśnie dostęp do dołu tej piramidy".</div>
   </section>
 
   <!-- 9 · Mate* -->
@@ -506,7 +506,7 @@
       </div>
     </div>
     <p class="thesis outside"><span class="muted">Platform · Agent · Store → twoja aplikacja używa AI</span><br>Mate → <mark>AI używa twojej aplikacji</mark></p>
-    <div class="notes">Jak u Johannesa: outside-in. Reszta symfony/ai pozwala twojej aplikacji używać AI. Mate robi odwrotnie.</div>
+    <div class="notes">Wejście: „Mate to jest właśnie dostęp do dołu piramidy". Jak u Johannesa: outside-in. Reszta symfony/ai pozwala twojej aplikacji używać AI. Mate robi odwrotnie.</div>
   </section>
 
   <!-- 9 · mate init -->
