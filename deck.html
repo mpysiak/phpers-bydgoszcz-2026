@@ -303,6 +303,18 @@
   .split .term { align-self: start; }
   .split.skills ul { font-size: 1.72cqi; }
 
+  /* ---- example ---- */
+  .ex-grid { display: grid; grid-template-columns: 1fr 1.25fr; gap: 3cqi; flex: 1; min-height: 0; align-items: start; }
+  .ex-grid ul { list-style: none; padding: 0; font-size: 1.8cqi; }
+  .ex-grid li { padding-left: 1.4em; position: relative; margin-bottom: .8em; line-height: 1.4; }
+  .ex-grid li::before { content: "●"; color: var(--accent); position: absolute; left: 0; font-size: .65em; top: .45em; }
+  .ex-grid em { font-style: normal; color: var(--accent); }
+  .shots { display: flex; flex-direction: column; gap: 1cqi; min-width: 0; }
+  .shot { width: 100%; display: block; border-radius: .6cqi; box-shadow: var(--shadow); border: 1px solid var(--line); }
+  .shot.strip { outline: .35cqi solid var(--mark); outline-offset: -.35cqi; }
+  .shots .cap { font-size: 1.45cqi; color: var(--muted); }
+  .shots .cap strong { color: var(--ink); }
+
   /* ---- video ---- */
   .slide.video { padding: 6cqi 5cqi 4.5cqi; }
   .vid-wrap { position: relative; flex: 1; min-height: 0; display: grid; place-items: center; }
@@ -411,6 +423,26 @@
     </div>
     <p class="thesis">Guess in <mark>→</mark> guess out.</p>
     <div class="notes">Kontekst ma budżet. Fakt o projekcie powinien przyjść w momencie potrzeby, zmierzony, tani. Nie siedzieć w kontekście na zapas. Jedyna rzecz, którą da się optymalizować, to tool.</div>
+  </section>
+
+  <!-- 5 · przykład -->
+  <section class="slide example">
+    <div class="eyebrow">Przykład · to samo w obu przebiegach</div>
+    <h2>Czysty Sylius, <span class="q">jedna customizacja</span></h2>
+    <div class="ex-grid">
+      <ul>
+        <li><strong>Sylius Standard 2.2</strong>, domyślne fixturki. Lista produktów <em>T-shirts › Men</em>: 9 produktów × 5 wariantów</li>
+        <li><strong>Ticket:</strong> pod nazwą produktu pokaż „5 variants · S, M, L, XL, XXL · 28 in stock”</li>
+        <li><strong>Zrobione po syliusowemu:</strong> twig hook + szablon, zero PHP. Szablon iteruje po wariantach i ich opcjach</li>
+        <li><strong>Efekt:</strong> 71 → <mark>111 zapytań</mark>, 45× ten sam <code>SELECT</code></li>
+      </ul>
+      <div class="shots">
+        <img class="shot" src="media/example-listing.png" alt="Lista produktów T-shirts / Men z linią wariantów pod nazwą i toolbarem profilera">
+        <img class="shot strip" src="media/example-toolbar.png" alt="Toolbar profilera: 111 zapytań do bazy, na żółto">
+        <p class="cap">Toolbar profilera: <strong>111 zapytań</strong>, na żółto. Sam profiler to widzi. Pytanie, czy agent go zapyta.</p>
+      </div>
+    </div>
+    <div class="notes">Kontekst przed nagraniem 1. Customizacja jest poprawna w sensie konwencji (hook, nie override), błąd siedzi w ścieżce danych: pętla w szablonie po relacji = klasyczne N+1. Czysty listing robi 71 zapytań (Sylius sam robi ×9 per produkt), z customizacją 111, z czego 45 to ten sam SELECT po option values. Oba nagrania dostają tę samą stronę i ten sam prompt.</div>
   </section>
 
   <!-- 5 · demo przebieg 1 -->
