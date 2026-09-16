@@ -122,6 +122,9 @@
     display: grid; place-items: center; overflow: hidden;
   }
   .about .photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .about .who { display: flex; flex-direction: column; align-items: center; gap: 1.4cqi; min-height: 0; }
+  .about .who .photo { width: 100%; max-height: none; }
+  .about .name { font-family: "Bricolage Grotesque", "Instrument Sans", Arial, sans-serif; font-weight: 700; font-size: 2.8cqi; letter-spacing: -.01em; color: var(--accent); }
   .about h3 {
     font-family: "JetBrains Mono", ui-monospace, monospace; font-weight: 500; font-size: 1.2cqi;
     letter-spacing: .12em; text-transform: uppercase; color: var(--muted);
@@ -336,9 +339,9 @@
   <!-- 2 · o mnie -->
   <section class="slide">
     <div class="eyebrow">O mnie</div>
-    <h2>Cześć, jestem <span class="q">Michał Pysiak</span></h2>
+    <h2>Cześć!</h2>
     <div class="about">
-      <div class="photo"><img src="media/michal.jpg" alt="Michał Pysiak"></div>
+      <div class="who"><div class="photo"><img src="media/michal.jpg" alt="Michał Pysiak"></div><p class="name">Michał Pysiak</p></div>
       <div>
         <h3>Co robię w Syliusie</h3>
         <ul>
